@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-12 dark:bg-[#0a0a0a]">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
       {/* Theme Toggle */}
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
