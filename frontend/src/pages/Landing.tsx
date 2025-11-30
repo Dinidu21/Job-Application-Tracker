@@ -147,25 +147,22 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:bg-[#0a0a0a] text-foreground">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:bg-[#0a0a0a] text-foreground global-glow">
       {/* Ambient glow background - theme aware */}
       <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl animate-pulse ${
-            isDark
-              ? 'bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-purple-500/20'
-              : 'bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10'
-          }`}
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl animate-pulse ${isDark
+            ? 'bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-purple-500/20'
+            : 'bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10'
+            }`}
         />
         <div
-          className={`absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${
-            isDark ? 'bg-blue-500/10' : 'bg-blue-500/5'
-          }`}
+          className={`absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${isDark ? 'bg-blue-500/10' : 'bg-blue-500/5'
+            }`}
         />
         <div
-          className={`absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${
-            isDark ? 'bg-purple-500/10' : 'bg-purple-500/5'
-          }`}
+          className={`absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${isDark ? 'bg-purple-500/10' : 'bg-purple-500/5'
+            }`}
         />
       </div>
 
@@ -225,7 +222,7 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative px-4 py-20 sm:py-32 lg:py-40">
+      <section className="relative px-4 py-20 sm:py-32 lg:py-40 glow-section">
         <div className="container mx-auto">
           <div className="mx-auto max-w-5xl text-center">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary backdrop-blur-sm cursor-glow hover-glow">
@@ -293,7 +290,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="relative px-4 py-20 sm:py-32">
+      <section id="features" className="relative px-4 py-20 sm:py-32 glow-section">
         <div className="container mx-auto">
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
@@ -339,7 +336,7 @@ const Landing = () => {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="relative px-4 py-20 sm:py-32">
+      <section id="testimonials" className="relative px-4 py-20 sm:py-32 glow-section">
         <div className="container mx-auto">
           <Card variant="glass" className="mx-auto max-w-4xl p-12">
             <div className="mb-12 text-center">
@@ -388,7 +385,7 @@ const Landing = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="relative px-4 py-20 sm:py-32">
+      <section id="pricing" className="relative px-4 py-20 sm:py-32 glow-section">
         <div className="container mx-auto">
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
@@ -406,11 +403,10 @@ const Landing = () => {
               <Card
                 key={plan.name}
                 variant={plan.popular ? 'glass' : 'outlined'}
-                className={`relative p-8 cursor-glow hover-glow magnetic-hover ${
-                  plan.popular
-                    ? 'border-primary/50 shadow-2xl shadow-primary/20 scale-105'
-                    : ''
-                }`}
+                className={`relative p-8 cursor-glow hover-glow magnetic-hover ${plan.popular
+                  ? 'border-primary/50 shadow-2xl shadow-primary/20 scale-105'
+                  : ''
+                  }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full border border-primary/50 bg-primary/20 px-4 py-1 text-sm font-semibold text-primary backdrop-blur-sm">
@@ -437,9 +433,8 @@ const Landing = () => {
                   asChild
                   fullWidth
                   variant={plan.popular ? 'default' : 'outline'}
-                  className={`cursor-glow hover-glow ${
-                    plan.popular ? 'shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40' : ''
-                  }`}
+                  className={`cursor-glow hover-glow ${plan.popular ? 'shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40' : ''
+                    }`}
                 >
                   <Link to="/register">{plan.cta}</Link>
                 </Button>
@@ -450,7 +445,7 @@ const Landing = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="relative px-4 py-20 sm:py-32">
+      <section className="relative px-4 py-20 sm:py-32 glow-section">
         <div className="container mx-auto">
           <Card variant="glass" className="mx-auto max-w-4xl p-12 text-center sm:p-16">
             <div className="mb-6 inline-flex items-center justify-center rounded-full bg-primary/20 p-3">

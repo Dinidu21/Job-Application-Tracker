@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import ProtectedRoute from './components/ProtectedRoute';
+import CustomCursor from './components/CustomCursor';
 
 // Lazy load pages for better performance
 const Landing = lazy(() => import('./pages/Landing'));
@@ -22,51 +23,54 @@ function App() {
   const { token } = useSelector((state: RootState) => state.auth);
 
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route
-          path="/login"
-          element={token ? <Navigate to="/dashboard" replace /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={token ? <Navigate to="/dashboard" replace /> : <Register />}
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/applications/new"
-          element={
-            <ProtectedRoute>
-              <ApplicationForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/applications/:id/edit"
-          element={
-            <ProtectedRoute>
-              <ApplicationForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/applications/:id"
-          element={
-            <ProtectedRoute>
-              <ApplicationDetails />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Suspense>
+    <div className="custom-cursor min-h-screen bg-background text-foreground">
+      <CustomCursor />
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/login"
+            element={token ? <Navigate to="/dashboard" replace /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={token ? <Navigate to="/dashboard" replace /> : <Register />}
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applications/new"
+            element={
+              <ProtectedRoute>
+                <ApplicationForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applications/:id/edit"
+            element={
+              <ProtectedRoute>
+                <ApplicationForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applications/:id"
+            element={
+              <ProtectedRoute>
+                <ApplicationDetails />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
+    </div>
   );
 }
 
