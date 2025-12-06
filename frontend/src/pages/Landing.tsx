@@ -16,6 +16,7 @@ import {
 import CountUp from 'react-countup';
 
 const Landing = () => {
+
   const features = [
     {
       icon: Sparkles,
@@ -290,6 +291,7 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
       <section id="testimonials" aria-label="Success stories from our users" className="py-20 sm:py-32 bg-gradient-to-b from-background to-gray-50/30 dark:to-gray-900/30">
         <div className="container mx-auto px-4">
           {/* Section Header */}
@@ -384,92 +386,22 @@ const Landing = () => {
                 ))}
               </div>
             </div>
-
-            {/* Bottom Row - Left to Right (Reversed) */}
-            <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:35s] mt-8">
-              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused] [animation-direction:reverse]">
-                {testimonials.slice().reverse().map((testimonial, index) => (
-                  <figure
-                    key={`bottom-${index}`}
-                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex flex-row items-center gap-3 mb-4">
-                      <img
-                        className="rounded-full border-2 border-purple-500/20"
-                        width="44"
-                        height="44"
-                        alt={testimonial.name}
-                        src={`https://images.unsplash.com/photo-${['1472099645785-5658abf4ff4e', '1560250097-0b93528c311a', '1552378166-7e9b7b5e9a9f'][index % 3]}?auto=format&fit=crop&w=100&q=80`}
-                      />
-                      <div className="flex flex-col">
-                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
-                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
-                        <div className="flex gap-1 mt-1">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                      "{testimonial.content}"
-                    </blockquote>
-                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-                      <CheckCircle2 className="h-3 w-3 text-green-500" />
-                      <span>3 interviews in 2 weeks</span>
-                    </div>
-                  </figure>
-                ))}
-              </div>
-              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused] [animation-direction:reverse]">
-                {testimonials.slice().reverse().map((testimonial, index) => (
-                  <figure
-                    key={`bottom-dup-${index}`}
-                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex flex-row items-center gap-3 mb-4">
-                      <img
-                        className="rounded-full border-2 border-green-500/20"
-                        width="44"
-                        height="44"
-                        alt={testimonial.name}
-                        src={`https://images.unsplash.com/photo-${['1573496359142-b8d87734a5a2', '1544725176-7c40e5a71c5e', '1534528741775-53994a69daeb'][index % 3]}?auto=format&fit=crop&w=100&q=80`}
-                      />
-                      <div className="flex flex-col">
-                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
-                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
-                        <div className="flex gap-1 mt-1">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                      "{testimonial.content}"
-                    </blockquote>
-                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-                      <BarChart3 className="h-3 w-3 text-blue-500" />
-                      <span>87% resume score improvement</span>
-                    </div>
-                  </figure>
-                ))}
-              </div>
+            {/* CTA */}
+            <div className="mt-16 text-center">
+              <Button asChild size="lg" className="px-8 group">
+                <Link to="/register">
+                  <Users className="mr-2 h-5 w-5" />
+                  Join Our Community
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
             </div>
           </div>
-
-          {/* CTA */}
-          <div className="mt-16 text-center">
-            <Button asChild size="lg" className="px-8 group">
-              <Link to="/register">
-                <Users className="mr-2 h-5 w-5" />
-                Join Our Community
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
         </div>
+
+
       </section>
+
       {/* Features Section */}
       <section id="features" className="px-4 py-20 bg-gray-50 dark:bg-gray-900/50">
         <div className="container mx-auto">
@@ -495,42 +427,6 @@ const Landing = () => {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Section */}
-      <section id="testimonials" className="px-4 py-20">
-        <div className="container mx-auto">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-12 text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-6 py-3">
-                <Users className="h-5 w-5" />
-                <span className="text-lg font-semibold">
-                  Over <span className="font-bold">50,000</span> successful job hunters use JobPath
-                </span>
-              </div>
-              <h2 className="mb-4 text-3xl font-bold">Why Trust Us?</h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.name} className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 interactive-hover">
-                  <div className="mb-4 flex gap-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400 scale-hover" />
-                    ))}
-                  </div>
-                  <p className="mb-4 text-gray-600 dark:text-gray-400 italic">
-                    "{testimonial.content}"
-                  </p>
-                  <div>
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -638,24 +534,42 @@ const Landing = () => {
             </Button>
           </div>
         </div>
+
         {/* Stats Bar */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+
+          {/* 98% */}
           <div className="text-center p-6 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-primary/10">
-            <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">98%</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              <CountUp end={98} duration={2} enableScrollSpy scrollSpyOnce />%
+            </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Job Satisfaction</div>
           </div>
+
+          {/* 4.7/5 */}
           <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-500/5 to-transparent border border-green-500/10">
-            <div className="text-3xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">4.7/5</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
+              <CountUp end={4.7} decimals={1} duration={2} enableScrollSpy scrollSpyOnce />/5
+            </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Platform Rating</div>
           </div>
+
+          {/* 2.1x */}
           <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-500/5 to-transparent border border-blue-500/10">
-            <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent">2.1x</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent">
+              <CountUp end={2.1} decimals={1} duration={2} enableScrollSpy scrollSpyOnce />x
+            </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Faster Hires</div>
           </div>
+
+          {/* 50K+ */}
           <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent border border-purple-500/10">
-            <div className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">50K+</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">
+              <CountUp end={50000} separator="," duration={2} enableScrollSpy scrollSpyOnce />+
+            </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Users Trust Us</div>
           </div>
+
         </div>
       </section>
 
