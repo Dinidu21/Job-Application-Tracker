@@ -100,6 +100,12 @@ const Landing = () => {
               <a href="#testimonials" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
                 Testimonials
               </a>
+              <a href="#companies" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
+                Companies
+              </a>
+              <a href="#contact" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
+                Contact
+              </a>
             </div>
 
             <div className="flex items-center gap-4">
@@ -380,7 +386,7 @@ const Landing = () => {
                     </blockquote>
                     <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
                       <Briefcase className="h-3 w-3" />
-                      <span>Hired at {['Amazon', 'Apple', 'Netflix'][index % 3]}</span>
+                      <span>Hired at {['Amazon', 'Apple', 'Netflix', 'Tesla', 'Meta'][index % 5]}</span>
                     </div>
                   </figure>
                 ))}
@@ -398,8 +404,157 @@ const Landing = () => {
             </div>
           </div>
         </div>
+      </section>
 
+      {/* Logo Marquee Section */}
+      <section id="companies" className="py-16 sm:py-24 bg-gradient-to-b from-background via-background to-gray-50/20 dark:to-gray-900/20">
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className="mx-auto max-w-2xl text-center mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm">
+              <Users className="h-4 w-4 text-primary" />
+              <span className="font-medium text-primary">Trusted by Top Companies</span>
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+              Where Our Users Get Hired
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              JobPath users land roles at the world's most innovative companies
+            </p>
+          </div>
 
+          {/* Marquee Container */}
+          <div className="relative max-w-6xl mx-auto opacity-90 dark:opacity-70 overflow-hidden 
+            before:content-[''] before:absolute before:inset-0 before:w-full 
+            before:bg-[linear-gradient(to_right,var(--background)_0%,transparent_10%,transparent_90%,var(--background)_100%)] 
+            before:z-10">
+
+            {/* Top Marquee - Left to Right */}
+            <div className="flex flex-nowrap gap-8 lg:gap-12 py-4 group">
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_40s_linear_infinite] 
+                group-hover:[animation-play-state:paused] will-change-transform">
+                {[
+                  { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
+                  { name: 'Microsoft', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg' },
+                  { name: 'Amazon', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg' },
+                  { name: 'Apple', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
+                  { name: 'Meta', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg' },
+                  { name: 'Netflix', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg' },
+                  { name: 'Spotify', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg' },
+                  { name: 'Airbnb', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' },
+                  { name: 'Uber', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Uber_logo_2018.svg' },
+                ].map((company, index) => (
+                  <div key={`top-${index}`} className="h-12 lg:h-14 w-auto flex items-center justify-center group/item">
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-8 lg:h-10 w-auto opacity-60 hover:opacity-100 
+                        grayscale hover:grayscale-0 transition-all duration-300 
+                        group-hover/item:scale-110"
+                      draggable="false"
+                      loading="lazy"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        img.replaceWith(
+                          Object.assign(document.createElement("div"), {
+                            className: "text-2xl font-bold text-gray-400",
+                            textContent: company.name,
+                          })
+                        );
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Duplicate for seamless loop */}
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_40s_linear_infinite] 
+                group-hover:[animation-play-state:paused] will-change-transform">
+                {[
+                  { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
+                  { name: 'Microsoft', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg' },
+                  { name: 'Amazon', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg' },
+                  { name: 'Apple', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
+                  { name: 'Meta', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg' },
+                  { name: 'Netflix', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg' },
+                  { name: 'Spotify', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg' },
+                  { name: 'Airbnb', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' },
+                  { name: 'Uber', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Uber_logo_2018.svg' },
+                ].map((company, index) => (
+                  <div key={`top-dup-${index}`} className="h-12 lg:h-14 w-auto flex items-center justify-center group/item">
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-8 lg:h-10 w-auto opacity-60 hover:opacity-100 
+                        grayscale hover:grayscale-0 transition-all duration-300 
+                        group-hover/item:scale-110"
+                      draggable="false"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Marquee - Right to Left (Reverse) */}
+            <div className="flex flex-nowrap gap-8 lg:gap-12 py-4 group mt-8">
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_45s_linear_infinite_reverse] 
+                group-hover:[animation-play-state:paused] will-change-transform">
+                {[
+                  { name: 'Tesla', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' },
+                  { name: 'Stripe', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' },
+                  { name: 'Shopify', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopify_logo_2018.svg' },
+                  { name: 'Slack', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg' },
+                  { name: 'Zoom', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Zoom_Communications_Logo.svg' },
+                  { name: 'Adobe', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Adobe_Corporate_logo.svg/1024px-Adobe_Corporate_logo.svg.png?20220820114255' },
+                  { name: 'Salesforce', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg' },
+                  { name: 'LinkedIn', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png' },
+                  { name: 'GitHub', logo: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' },
+                ].map((company, index) => (
+                  <div key={`bottom-${index}`} className="h-12 lg:h-14 w-auto flex items-center justify-center group/item">
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-8 lg:h-10 w-auto opacity-60 hover:opacity-100 
+                        grayscale hover:grayscale-0 transition-all duration-300 
+                        group-hover/item:scale-110"
+                      draggable="false"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Duplicate for seamless loop */}
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_45s_linear_infinite_reverse] 
+                group-hover:[animation-play-state:paused] will-change-transform">
+                {[
+                  { name: 'Tesla', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' },
+                  { name: 'Stripe', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' },
+                  { name: 'Shopify', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopify_logo_2018.svg' },
+                  { name: 'Slack', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg' },
+                  { name: 'Zoom', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Zoom_Communications_Logo.svg' },
+                  { name: 'Adobe', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Adobe_Corporate_logo.svg' },
+                  { name: 'Salesforce', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg' },
+                  { name: 'LinkedIn', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png' },
+                  { name: 'GitHub', logo: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' },
+                ].map((company, index) => (
+                  <div key={`bottom-dup-${index}`} className="h-12 lg:h-14 w-auto flex items-center justify-center group/item">
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-8 lg:h-10 w-auto opacity-60 hover:opacity-100 
+                        grayscale hover:grayscale-0 transition-all duration-300 
+                        group-hover/item:scale-110"
+                      draggable="false"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Features Section */}
@@ -574,7 +729,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+      <footer id="contact" className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div>

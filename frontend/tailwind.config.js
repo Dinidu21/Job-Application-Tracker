@@ -48,6 +48,8 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       animation: {
+        'marquee': 'marquee var(--duration, 40s) linear infinite',
+        'marquee-reverse': 'marquee-reverse var(--duration, 40s) linear infinite',
         'float': 'float 6s ease-in-out infinite',
         'gradient-x': 'gradientX 3s ease infinite',
         'spin-slow': 'spin 3s linear infinite',
@@ -64,8 +66,12 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(calc(-100% - var(--gap)))' },
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-100% - var(--gap, 2rem)))' },
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(calc(-100% - var(--gap, 2rem)))' },
+          '100%': { transform: 'translateX(0)' },
         },
         gradientX: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
