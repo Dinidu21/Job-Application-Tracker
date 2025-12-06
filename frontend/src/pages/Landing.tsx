@@ -41,6 +41,18 @@ const Landing = () => {
 
   const testimonials = [
     {
+      name: 'John Doe',
+      role: 'Data Scientist',
+      content: 'Using JobPath, I organized my job applications and improved my resume with AI feedback. Landed 3 interviews in 2 weeks!',
+      rating: 5,
+    },
+    {
+      name: 'Alex Johnson',
+      role: 'UX Designer',
+      content: 'JobPath saved me 20+ hours per week. The AI resume feedback was spot on and helped me get 4 interviews in one week!',
+      rating: 5,
+    },
+    {
       name: 'Sarah Chen',
       role: 'Software Engineer',
       content: 'Tracker Pro transformed my job search. The AI feedback helped me land 3 interviews in one week!',
@@ -56,6 +68,12 @@ const Landing = () => {
       name: 'Emily Rodriguez',
       role: 'Marketing Director',
       content: 'Automated follow-ups saved me hours. I never miss a touchpoint anymore, and my response rate doubled.',
+      rating: 5,
+    },
+    {
+      name: 'David Kim',
+      role: 'Financial Analyst',
+      content: 'The interview prep hub is fantastic. I can store all my notes and research in one place, making interviews much easier.',
       rating: 5,
     },
   ];
@@ -214,23 +232,6 @@ const Landing = () => {
                     </Link>
                   </Button>
                 </div>
-
-                {/* Trust Indicators */}
-                <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    Trusted by teams at
-                  </p>
-                  <div className="flex flex-wrap items-center gap-6 opacity-70">
-                    {['Google', 'Microsoft', 'Airbnb', 'Stripe', 'Spotify'].map((company) => (
-                      <div
-                        key={company}
-                        className="text-lg font-semibold text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                      >
-                        {company}
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               {/* Right Side - Interactive Preview */}
@@ -289,6 +290,186 @@ const Landing = () => {
         </div>
       </section>
 
+      <section id="testimonials" aria-label="Success stories from our users" className="py-20 sm:py-32 bg-gradient-to-b from-background to-gray-50/30 dark:to-gray-900/30">
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm">
+              <Star className="h-4 w-4 fill-primary text-primary" />
+              <span className="font-medium text-primary">5.0 Average Rating</span>
+            </div>
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
+              Join <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">50,000+</span> Successful Job Hunters
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Don't just take our word for it. See how JobPath transformed careers across industries.
+            </p>
+          </div>
+
+          {/* Infinite Scroll Testimonials Carousel */}
+          <div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-white/80 to-gray-50/50 dark:from-gray-900/80 dark:to-gray-900/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-800/50">
+            {/* Gradient Fades */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background to-transparent z-20" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background to-transparent z-20" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-background to-transparent z-20" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent z-20" />
+
+            {/* Top Row - Right to Left */}
+            <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:40s]">
+              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
+                {testimonials.map((testimonial, index) => (
+                  <figure
+                    key={`top-${index}`}
+                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex flex-row items-center gap-3 mb-4">
+                      <img
+                        className="rounded-full border-2 border-primary/20"
+                        width="44"
+                        height="44"
+                        alt={testimonial.name}
+                        src={`https://images.unsplash.com/photo-${['1573496359142-b8d87734a5a2', '1544725176-7c40e5a71c5e', '1534528741775-53994a69daeb'][index % 3]}?auto=format&fit=crop&w=100&q=80`} />
+                      <div className="flex flex-col">
+                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
+                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
+                        <div className="flex gap-1 mt-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                      <Briefcase className="h-3 w-3" />
+                      <span>Hired at {['Google', 'Microsoft', 'Spotify'][index % 3]}</span>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
+                {testimonials.map((testimonial, index) => (
+                  <figure
+                    key={`top-dup-${index}`}
+                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex flex-row items-center gap-3 mb-4">
+                      <img
+                        className="rounded-full border-2 border-primary/20"
+                        width="44"
+                        height="44"
+                        alt={testimonial.name}
+                        src={`https://images.unsplash.com/photo-${['1508214751196-bcfd4ca60f91', '1517841905240-472988babdf9', '1519085360753-af0119f7cbe7'][index % 3]}?auto=format&fit=crop&w=100&q=80`}
+                      />
+                      <div className="flex flex-col">
+                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
+                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
+                        <div className="flex gap-1 mt-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                      <Briefcase className="h-3 w-3" />
+                      <span>Hired at {['Amazon', 'Apple', 'Netflix'][index % 3]}</span>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Row - Left to Right (Reversed) */}
+            <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:35s] mt-8">
+              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused] [animation-direction:reverse]">
+                {testimonials.slice().reverse().map((testimonial, index) => (
+                  <figure
+                    key={`bottom-${index}`}
+                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex flex-row items-center gap-3 mb-4">
+                      <img
+                        className="rounded-full border-2 border-purple-500/20"
+                        width="44"
+                        height="44"
+                        alt={testimonial.name}
+                        src={`https://images.unsplash.com/photo-${['1472099645785-5658abf4ff4e', '1560250097-0b93528c311a', '1552378166-7e9b7b5e9a9f'][index % 3]}?auto=format&fit=crop&w=100&q=80`}
+                      />
+                      <div className="flex flex-col">
+                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
+                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
+                        <div className="flex gap-1 mt-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                      <CheckCircle2 className="h-3 w-3 text-green-500" />
+                      <span>3 interviews in 2 weeks</span>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused] [animation-direction:reverse]">
+                {testimonials.slice().reverse().map((testimonial, index) => (
+                  <figure
+                    key={`bottom-dup-${index}`}
+                    className="relative w-80 cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:bg-white/80 dark:hover:bg-gray-900/80 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex flex-row items-center gap-3 mb-4">
+                      <img
+                        className="rounded-full border-2 border-green-500/20"
+                        width="44"
+                        height="44"
+                        alt={testimonial.name}
+                        src={`https://images.unsplash.com/photo-${['1573496359142-b8d87734a5a2', '1544725176-7c40e5a71c5e', '1534528741775-53994a69daeb'][index % 3]}?auto=format&fit=crop&w=100&q=80`}
+                      />
+                      <div className="flex flex-col">
+                        <figcaption className="text-sm font-semibold text-foreground">{testimonial.name}</figcaption>
+                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{testimonial.role}</p>
+                        <div className="flex gap-1 mt-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                      <BarChart3 className="h-3 w-3 text-blue-500" />
+                      <span>87% resume score improvement</span>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-16 text-center">
+            <Button asChild size="lg" className="px-8 group">
+              <Link to="/register">
+                <Users className="mr-2 h-5 w-5" />
+                Join Our Community
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
       {/* Features Section */}
       <section id="features" className="px-4 py-20 bg-gray-50 dark:bg-gray-900/50">
         <div className="container mx-auto">
@@ -455,6 +636,25 @@ const Landing = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
+          </div>
+        </div>
+        {/* Stats Bar */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div className="text-center p-6 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-primary/10">
+            <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">98%</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Job Satisfaction</div>
+          </div>
+          <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-500/5 to-transparent border border-green-500/10">
+            <div className="text-3xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">4.7/5</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Platform Rating</div>
+          </div>
+          <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-500/5 to-transparent border border-blue-500/10">
+            <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent">2.1x</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Faster Hires</div>
+          </div>
+          <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent border border-purple-500/10">
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">50K+</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Users Trust Us</div>
           </div>
         </div>
       </section>
