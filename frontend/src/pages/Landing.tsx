@@ -420,7 +420,7 @@ const Landing = () => {
               <Users className="h-4 w-4 text-primary" />
               <span className="font-medium text-primary">Trusted by Top Companies</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4 bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
               Where Our Users Get Hired
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -566,7 +566,7 @@ const Landing = () => {
       <section id="features" className="px-4 py-20 bg-gray-50 dark:bg-gray-900/50">
         <div className="container mx-auto">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
               Everything You Need
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -595,7 +595,7 @@ const Landing = () => {
       <section id="pricing" className="px-4 py-20 bg-gray-50 dark:bg-gray-900/50">
         <div className="container mx-auto">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
               Simple, Transparent Pricing
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -646,12 +646,13 @@ const Landing = () => {
                   </li>
                 ))}
               </ul>
-              <Button
-                asChild
-                fullWidth
-                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 btn-hover"
-              >
-                <Link to="/register">Start Free Trial</Link>
+              <Button asChild fullWidth className="group relative overflow-hidden">
+                <Link to="/register" className="relative z-10 flex items-center justify-center gap-2 px-6 py-3 font-medium text-black dark:text-black">
+                  Start Free Trial
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
               </Button>
             </div>
 
@@ -684,7 +685,7 @@ const Landing = () => {
       <section className="px-4 py-20">
         <div className="container mx-auto">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
               Stop Guessing. Start Organizing.
             </h2>
             <p className="mb-8 text-xl text-gray-600 dark:text-gray-400">

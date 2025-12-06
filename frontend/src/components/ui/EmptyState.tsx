@@ -2,9 +2,9 @@ import { HTMLAttributes } from 'react';
 import { cn } from '../../utils/cn';
 import { LucideIcon } from 'lucide-react';
 
-export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
+export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   icon?: LucideIcon;
-  title: string;
+  title: React.ReactNode;
   description?: string;
   action?: React.ReactNode;
 }

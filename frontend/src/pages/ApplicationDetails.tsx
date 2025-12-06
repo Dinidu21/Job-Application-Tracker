@@ -147,7 +147,7 @@ const ApplicationDetails = () => {
                       <Briefcase className="h-8 w-8 text-primary" aria-hidden="true" />
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="mb-2 text-3xl">{application.company}</CardTitle>
+                      <CardTitle className="mb-2 text-3xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">{application.company}</CardTitle>
                       <p className="text-xl font-medium text-muted-foreground">
                         {application.position}
                       </p>
@@ -233,7 +233,7 @@ const ApplicationDetails = () => {
                 <div className="mb-8 animate-fade-in">
                   <div className="mb-3 flex items-center gap-2">
                     <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
-                    <h2 className="text-lg font-semibold text-foreground">Notes</h2>
+                    <h2 className="text-lg font-semibold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">Notes</h2>
                   </div>
                   <Card variant="outlined" className="p-6">
                     <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">

@@ -108,7 +108,7 @@ const ApplicationForm = () => {
         <div className="mx-auto max-w-3xl animate-slide-up">
           <Card variant="glass">
             <CardHeader>
-              <CardTitle className="text-3xl">
+              <CardTitle className="text-3xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
                 {isEdit ? 'Edit Application' : 'New Application'}
               </CardTitle>
               <CardDescription>

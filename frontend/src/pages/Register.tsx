@@ -54,7 +54,7 @@ const Register = () => {
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary/80 to-purple-600 shadow-lg shadow-primary/30">
               <Briefcase className="h-8 w-8 text-white" aria-hidden="true" />
             </div>
-            <CardTitle className="text-3xl">Create Account</CardTitle>
+            <CardTitle className="text-3xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">Create Account</CardTitle>
             <CardDescription>
               Start tracking your job applications today
             </CardDescription>
