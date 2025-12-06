@@ -12,6 +12,11 @@ import {
   Star,
   Users,
   Play,
+  Github,
+  Linkedin,
+  Twitter,
+  Heart,
+  ExternalLink,
 } from 'lucide-react';
 import CountUp from 'react-countup';
 
@@ -641,7 +646,11 @@ const Landing = () => {
                   </li>
                 ))}
               </ul>
-              <Button asChild fullWidth className="bg-white dark:bg-black text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900 btn-hover">
+              <Button
+                asChild
+                fullWidth
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 btn-hover"
+              >
                 <Link to="/register">Start Free Trial</Link>
               </Button>
             </div>
@@ -729,100 +738,266 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-              <div className="mb-4 flex items-center gap-2">
-                <Briefcase className="h-5 w-5" />
-                <span className="text-lg font-bold">JobPath</span>
+      <footer className="relative overflow-hidden border-t border-gray-200/20 dark:border-gray-800/20 bg-gradient-to-b from-background via-background to-gray-50/10 dark:to-gray-900/5">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+        <div className="container relative mx-auto px-4 py-12 md:py-16 lg:py-20">
+          {/* Main Footer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+            {/* Brand Section */}
+            <div className="lg:col-span-4 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-purple-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition-opacity" />
+                  <Briefcase className="relative h-8 w-8 text-primary" />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-2xl font-bold bg-gradient-to-r from-foreground via-foreground/90 to-primary bg-clip-text text-transparent">
+                    JobPath
+                  </span>
+                  <p className="text-sm font-medium text-primary/80">AI-Powered Career Platform</p>
+                </div>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                The modern way to track and manage your job applications.
+
+              <p className="text-gray-600 dark:text-gray-400 max-w-md leading-relaxed text-sm md:text-base">
+                Transform your job search with intelligent tracking, AI-driven insights, and seamless automation.
+                Join 50,000+ professionals who landed their dream roles.
               </p>
+
+              {/* Social Links */}
+              <div className="flex items-center gap-3 pt-4">
+                <a
+                  href="https://github.com/Dinidu21"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative p-3 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm 
+                    border border-gray-200/50 dark:border-gray-800/50 hover:border-primary/30
+                    hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/10 group-hover:to-primary/5 rounded-xl transition-all duration-500" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/dinidu21"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative p-3 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm 
+                    border border-gray-200/50 dark:border-gray-800/50 hover:border-[#0077B5]/30
+                    hover:shadow-lg hover:shadow-[#0077B5]/10 transition-all duration-300 group"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-[#0077B5] transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0077B5]/0 via-[#0077B5]/0 to-[#0077B5]/0 group-hover:from-[#0077B5]/5 group-hover:via-[#0077B5]/10 group-hover:to-[#0077B5]/5 rounded-xl transition-all duration-500" />
+                </a>
+                <a
+                  href="https://x.com/dinidu21"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative p-3 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm 
+                    border border-gray-200/50 dark:border-gray-800/50 hover:border-[#1DA1F2]/30
+                    hover:shadow-lg hover:shadow-[#1DA1F2]/10 transition-all duration-300 group"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-[#1DA1F2] transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#1DA1F2]/0 via-[#1DA1F2]/0 to-[#1DA1F2]/0 group-hover:from-[#1DA1F2]/5 group-hover:via-[#1DA1F2]/10 group-hover:to-[#1DA1F2]/5 rounded-xl transition-all duration-500" />
+                </a>
+                <a
+                  href="https://dinidu21.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative p-3 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm 
+                    border border-gray-200/50 dark:border-gray-800/50 hover:border-purple-500/30
+                    hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 group"
+                  aria-label="Portfolio"
+                >
+                  <ExternalLink className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-purple-500 transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/0 to-purple-500/0 group-hover:from-purple-500/5 group-hover:via-purple-500/10 group-hover:to-purple-500/5 rounded-xl transition-all duration-500" />
+                </a>
+              </div>
             </div>
 
-            <div>
-              <h3 className="mb-4 text-sm font-semibold">Product</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li>
-                  <a href="#features" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a href="#pricing" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <Link to="/dashboard" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Dashboard
-                  </Link>
-                </li>
-              </ul>
+            {/* Quick Links */}
+            <div className="lg:col-span-2 space-y-6">
+              <div>
+                <h3 className="font-semibold text-sm uppercase tracking-wider text-foreground/90 mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-primary rounded-full" />
+                  Product
+                </h3>
+                <nav className="flex flex-col space-y-3">
+                  {[
+                    { icon: Sparkles, label: 'Features', href: '#features' },
+                    { icon: BarChart3, label: 'Pricing', href: '#pricing' },
+                    { icon: FileText, label: 'Dashboard', href: '/dashboard' },
+                    { icon: ExternalLink, label: 'API', href: '#api' },
+                    { icon: Play, label: 'Demo', href: '#demo' },
+                  ].map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 
+                        hover:text-primary dark:hover:text-primary transition-all duration-200 group py-1"
+                    >
+                      <item.icon className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                      <span className="group-hover:translate-x-1 transition-transform">{item.label}</span>
+                    </Link>
+                  ))}
+                </nav>
+              </div>
             </div>
 
-            <div>
-              <h3 className="mb-4 text-sm font-semibold">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li>
-                  <a href="#about" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#blog" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Contact
-                  </a>
-                </li>
-              </ul>
+            {/* Company Links */}
+            <div className="lg:col-span-3 space-y-6">
+              <div>
+                <h3 className="font-semibold text-sm uppercase tracking-wider text-foreground/90 mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-primary rounded-full" />
+                  Company
+                </h3>
+                <nav className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+                  {[
+                    { icon: Briefcase, label: 'About', href: '#about' },
+                    { icon: FileText, label: 'Blog', href: '#blog' },
+                    { icon: Users, label: 'Careers', href: '#careers' },
+                    { icon: Mail, label: 'Contact', href: '#contact' },
+                    { icon: Star, label: 'Testimonials', href: '#testimonials' },
+                    { icon: Users, label: 'Community', href: '#community' },
+                  ].map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 
+                        hover:text-primary dark:hover:text-primary transition-all duration-200 group py-1"
+                    >
+                      <item.icon className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                      <span className="group-hover:translate-x-1 transition-transform">{item.label}</span>
+                    </Link>
+                  ))}
+                </nav>
+              </div>
             </div>
 
-            <div>
-              <h3 className="mb-4 text-sm font-semibold">Get Started</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li>
-                  <Link to="/register" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Sign Up
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/login" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <a href="#docs" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                    Documentation
-                  </a>
-                </li>
-              </ul>
+            {/* Newsletter & CTA */}
+            <div className="lg:col-span-3 space-y-6">
+              <div>
+                <h3 className="font-semibold text-sm uppercase tracking-wider text-foreground/90 mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-primary rounded-full" />
+                  Stay Updated
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  Get weekly job search tips and platform updates.
+                </p>
+                <form className="space-y-3">
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-gray-900/50 
+                        border border-gray-200/50 dark:border-gray-800/50 backdrop-blur-sm
+                        focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30
+                        placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full group relative overflow-hidden"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      Subscribe
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </Button>
+                </form>
+
+                <div className="pt-4">
+                  <h4 className="text-sm font-medium text-foreground/90 mb-3">Trust & Security</h4>
+                  <div className="flex items-center gap-3">
+                    <div className="px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-xs font-medium text-green-600 dark:text-green-400">
+                      GDPR Compliant
+                    </div>
+                    <div className="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs font-medium text-blue-600 dark:text-blue-400">
+                      SOC 2 Type II
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mt-12 border-t border-gray-200 dark:border-gray-800 pt-8">
-            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                © {new Date().getFullYear()} JobPath. All rights reserved.
-              </p>
-              <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                <a href="#privacy" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                  Privacy
-                </a>
-                <a href="#terms" className="hover:text-black dark:hover:text-white transition-colors link-hover">
-                  Terms
-                </a>
+          {/* Divider */}
+          <div className="my-12 h-px bg-gradient-to-r from-transparent via-gray-200/50 dark:via-gray-800/50 to-transparent" />
+
+          {/* Bottom Bar */}
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <div className="flex items-center gap-2">
+                <Heart className="h-4 w-4 fill-red-500 text-red-500 animate-pulse" />
+                <span>Built with passion for job seekers worldwide</span>
               </div>
+              <div className="hidden lg:block w-px h-4 bg-gray-300 dark:bg-gray-700" />
+              <div className="flex items-center gap-2">
+                <Briefcase className="h-4 w-4 text-primary" />
+                <span>© {new Date().getFullYear()} JobPath. All rights reserved.</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <nav className="flex items-center gap-6 text-sm">
+                {[
+                  { label: 'Privacy', href: '#privacy' },
+                  { label: 'Terms', href: '#terms' },
+                  { label: 'Cookies', href: '#cookies' },
+                  { label: 'Status', href: '#status' },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+
+              <div className="flex items-center gap-4">
+                <ThemeToggle />
+                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  All systems operational
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Attribution */}
+          <div className="mt-8 pt-6 border-t border-gray-200/20 dark:border-gray-800/20">
+            <div className="text-center text-xs text-gray-500 dark:text-gray-400">
+              <p>
+                JobPath is independently created and maintained by{' '}
+                <a
+                  href="https://github.com/Dinidu21"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline font-medium"
+                >
+                  Dinidu Sachintha
+                </a>
+              </p>
+              <p className="mt-1">
+                Made in Sri Lanka 🇱🇰 • Version 1.0
+              </p>
             </div>
           </div>
         </div>
+
+        {/* Floating Elements */}
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-500/5 rounded-full blur-3xl" />
       </footer>
+
     </div>
   );
 };
