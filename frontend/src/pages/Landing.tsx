@@ -91,8 +91,12 @@ const Landing = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center gap-2 text-xl font-bold">
-              <Briefcase className="h-6 w-6" />
-              JobPath
+              <Briefcase className="h-6 w-6 " />
+              <span className="bg-gradient-to-r from-primary via-purple-500 to-primary 
+                            bg-clip-text text-transparent 
+                            animate-gradient-x bg-[length:200%_auto]">
+                JobPath
+              </span>
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
