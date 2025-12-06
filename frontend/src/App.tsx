@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 const Landing = lazy(() => import('./pages/Landing'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const ApplicationForm = lazy(() => import('./pages/ApplicationForm'));
 const ApplicationDetails = lazy(() => import('./pages/ApplicationDetails'));
@@ -26,6 +27,7 @@ function App() {
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
           <Route
             path="/login"
             element={token ? <Navigate to="/dashboard" replace /> : <Login />}

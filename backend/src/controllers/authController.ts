@@ -43,3 +43,13 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
   }
 };
 
+export const googleAuth = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { googleId, name, email } = req.body;
+    const result = await authService.googleAuth({ googleId, name, email });
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+

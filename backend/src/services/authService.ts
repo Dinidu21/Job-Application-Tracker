@@ -22,6 +22,12 @@ export interface AuthResponse {
   token: string;
 }
 
+export interface GoogleAuthData {
+  googleId: string;
+  name: string;
+  email: string;
+}
+
 export const registerUser = async (data: RegisterDTO): Promise<AuthResponse> => {
   const { name, email, password } = data;
 
@@ -65,6 +71,48 @@ export const loginUser = async (data: LoginDTO): Promise<AuthResponse> => {
   const isMatch = await user.comparePassword(password);
   if (!isMatch) {
     throw new Error('Invalid email or password');
+  }
+
+  // Generate token
+  const token = generateToken({
+    id: user._id.toString(),
+    email: user.email,
+    role: user.role,
+  });
+
+  return {
+    user: {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+    token,
+  };
+};
+
+export const googleAuth = async (data: GoogleAuthData): Promise<AuthResponse> => {
+  const { googleId, name, email } = data;
+
+  // Check if user exists with this Google ID
+  let user = await User.findOne({ googleId });
+
+  if (!user) {
+    // Check if user exists with this email
+    user = await User.findOne({ email });
+
+    if (user) {
+      // Link Google account to existing user
+      user.googleId = googleId;
+      await user.save();
+    } else {
+      // Create new user
+      user = await User.create({
+        name,
+        email,
+        googleId,
+      });
+    }
   }
 
   // Generate token
