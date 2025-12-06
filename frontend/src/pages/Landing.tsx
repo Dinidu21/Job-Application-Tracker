@@ -70,13 +70,13 @@ const Landing = () => {
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+              <a href="#features" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
                 Features
               </a>
-              <a href="#pricing" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+              <a href="#pricing" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
                 Pricing
               </a>
-              <a href="#testimonials" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+              <a href="#testimonials" className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors link-hover">
                 Testimonials
               </a>
             </div>
@@ -118,13 +118,13 @@ const Landing = () => {
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="px-8">
+              <Button asChild size="lg" className="px-8 btn-hover">
                 <Link to="/register">
                   Start Tracking Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="px-8">
+              <Button asChild variant="outline" size="lg" className="px-8 interactive-hover">
                 <Link to="/login">Book a Demo</Link>
               </Button>
             </div>
@@ -148,8 +148,8 @@ const Landing = () => {
             {features.map((feature) => {
               const Icon = feature.icon;
               return (
-                <div key={feature.title} className="text-center">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 mx-auto">
+                <div key={feature.title} className="text-center card-hover p-6 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 mx-auto scale-hover">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
@@ -177,10 +177,10 @@ const Landing = () => {
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {testimonials.map((testimonial) => (
-                <div key={testimonial.name} className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6">
+                <div key={testimonial.name} className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 interactive-hover">
                   <div className="mb-4 flex gap-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400 scale-hover" />
                     ))}
                   </div>
                   <p className="mb-4 text-gray-600 dark:text-gray-400 italic">
@@ -210,7 +210,7 @@ const Landing = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-            <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
+            <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8 card-hover">
               <div className="mb-6">
                 <h3 className="mb-2 text-2xl font-bold">Free</h3>
                 <p className="text-gray-600 dark:text-gray-400">Perfect for getting started</p>
@@ -222,18 +222,18 @@ const Landing = () => {
               <ul className="mb-8 space-y-3">
                 {['Track up to 10 jobs', 'Basic pipeline view', 'Email reminders', 'Mobile app access', 'Community support'].map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 scale-hover" />
                     <span className="text-gray-600 dark:text-gray-400 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild fullWidth variant="outline">
+              <Button asChild fullWidth variant="outline" className="interactive-hover">
                 <Link to="/register">Get Started</Link>
               </Button>
             </div>
 
-            <div className="rounded-lg border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black p-8 relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-sm font-medium rounded">
+            <div className="rounded-lg border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black p-8 relative glow-primary">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-sm font-medium rounded magnetic">
                 Most Popular
               </div>
               <div className="mb-6">
@@ -247,17 +247,17 @@ const Landing = () => {
               <ul className="mb-8 space-y-3">
                 {['Unlimited job tracking', 'AI Resume Feedback', 'Automated Follow-ups', 'Interview Prep Hub', 'Advanced analytics', 'Priority support'].map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 scale-hover" />
                     <span className="text-gray-300 dark:text-gray-600 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild fullWidth className="bg-white dark:bg-black text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+              <Button asChild fullWidth className="bg-white dark:bg-black text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900 btn-hover">
                 <Link to="/register">Start Free Trial</Link>
               </Button>
             </div>
 
-            <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
+            <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8 card-hover">
               <div className="mb-6">
                 <h3 className="mb-2 text-2xl font-bold">Business</h3>
                 <p className="text-gray-600 dark:text-gray-400">For teams and agencies</p>
@@ -269,12 +269,12 @@ const Landing = () => {
               <ul className="mb-8 space-y-3">
                 {['Everything in Pro', 'Team collaboration', 'Shared pipelines', 'Custom workflows', 'Dedicated support', 'API access'].map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 scale-hover" />
                     <span className="text-gray-600 dark:text-gray-400 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild fullWidth variant="outline">
+              <Button asChild fullWidth variant="outline" className="interactive-hover">
                 <Link to="/register">Contact Sales</Link>
               </Button>
             </div>
@@ -292,7 +292,7 @@ const Landing = () => {
             <p className="mb-8 text-xl text-gray-600 dark:text-gray-400">
               Join thousands who turned chaos into career success.
             </p>
-            <Button asChild size="lg" className="px-8">
+            <Button asChild size="lg" className="px-8 btn-hover">
               <Link to="/register">
                 Sign Up for Free
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -320,17 +320,17 @@ const Landing = () => {
               <h3 className="mb-4 text-sm font-semibold">Product</h3>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li>
-                  <a href="#features" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#features" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Features
                   </a>
                 </li>
                 <li>
-                  <a href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#pricing" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Pricing
                   </a>
                 </li>
                 <li>
-                  <Link to="/dashboard" className="hover:text-black dark:hover:text-white transition-colors">
+                  <Link to="/dashboard" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Dashboard
                   </Link>
                 </li>
@@ -341,17 +341,17 @@ const Landing = () => {
               <h3 className="mb-4 text-sm font-semibold">Company</h3>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li>
-                  <a href="#about" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#about" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     About
                   </a>
                 </li>
                 <li>
-                  <a href="#blog" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#blog" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#contact" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#contact" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Contact
                   </a>
                 </li>
@@ -362,17 +362,17 @@ const Landing = () => {
               <h3 className="mb-4 text-sm font-semibold">Get Started</h3>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li>
-                  <Link to="/register" className="hover:text-black dark:hover:text-white transition-colors">
+                  <Link to="/register" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Sign Up
                   </Link>
                 </li>
                 <li>
-                  <Link to="/login" className="hover:text-black dark:hover:text-white transition-colors">
+                  <Link to="/login" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Sign In
                   </Link>
                 </li>
                 <li>
-                  <a href="#docs" className="hover:text-black dark:hover:text-white transition-colors">
+                  <a href="#docs" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                     Documentation
                   </a>
                 </li>
@@ -386,10 +386,10 @@ const Landing = () => {
                 © {new Date().getFullYear()} JobPath. All rights reserved.
               </p>
               <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                <a href="#privacy" className="hover:text-black dark:hover:text-white transition-colors">
+                <a href="#privacy" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                   Privacy
                 </a>
-                <a href="#terms" className="hover:text-black dark:hover:text-white transition-colors">
+                <a href="#terms" className="hover:text-black dark:hover:text-white transition-colors link-hover">
                   Terms
                 </a>
               </div>

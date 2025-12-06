@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import ProtectedRoute from './components/ProtectedRoute';
-import CustomCursor from './components/CustomCursor';
 
 // Lazy load pages for better performance
 const Landing = lazy(() => import('./pages/Landing'));
@@ -23,8 +22,7 @@ function App() {
   const { token } = useSelector((state: RootState) => state.auth);
 
   return (
-    <div className="custom-cursor min-h-screen bg-background text-foreground">
-      <CustomCursor />
+    <div className="min-h-screen bg-background text-foreground">
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/" element={<Landing />} />
