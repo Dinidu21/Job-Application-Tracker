@@ -19,7 +19,6 @@ import {
   Link as LinkIcon,
   Mail,
   User,
-  FileText,
   Save,
 } from 'lucide-react';
 import { Button, Input, Textarea, Select, Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui';

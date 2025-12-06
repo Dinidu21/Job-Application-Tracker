@@ -1,4 +1,4 @@
-import { useState, FormEvent, lazy } from 'react';
+import { useState, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { RootState, AppDispatch } from '../store/store';

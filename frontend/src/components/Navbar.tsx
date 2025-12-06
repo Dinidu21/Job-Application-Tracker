@@ -4,7 +4,6 @@ import { RootState } from '../store/store';
 import { logout } from '../store/authSlice';
 import { Briefcase, Plus, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { cn } from '../utils/cn';
 import Button from './ui/Button';
 import Avatar from './ui/Avatar';
 import ThemeToggle from './ThemeToggle';
