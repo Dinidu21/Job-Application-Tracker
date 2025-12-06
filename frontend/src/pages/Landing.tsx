@@ -11,7 +11,9 @@ import {
   ArrowRight,
   Star,
   Users,
+  Play,
 } from 'lucide-react';
+import CountUp from 'react-countup';
 
 const Landing = () => {
   const features = [
@@ -100,33 +102,188 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-4 py-20 sm:py-32">
-        <div className="container mx-auto">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-4 py-2 text-sm">
-              <Sparkles className="h-4 w-4" />
-              <span>AI-Powered Job Search Platform</span>
-            </div>
+      <section className="relative px-4 py-20 sm:py-32 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 dark:to-primary/10" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow delay-1000" />
 
-            <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl">
-              <span className="block">Master Your Job Search.</span>
-              <span className="block text-gray-600 dark:text-gray-400">Land the Perfect Job.</span>
-            </h1>
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="container mx-auto relative z-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+              {/* Left Content */}
+              <div className="lg:w-1/2 text-left animate-fade-in">
+                <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm px-4 py-2 text-sm hover:scale-105 transition-transform duration-300">
+                  <div className="relative">
+                    <Sparkles className="h-4 w-4 animate-spin-slow" />
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
+                  </div>
+                  <span className="font-medium bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                    AI-Powered Job Search Platform
+                  </span>
+                </div>
 
-            <p className="mb-12 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              The definitive, AI-powered tool to organize, track, and optimize every stage of your job application journey.
-            </p>
+                <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                  <span className="block bg-gradient-to-r from-foreground to-gray-500 bg-clip-text text-transparent">
+                    Master Your Job
+                  </span>
+                  <span className="block mt-2">
+                    <span className="relative">
+                      <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">
+                        Search Journey
+                      </span>
+                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary via-purple-500 to-primary animate-gradient-x" />
+                    </span>
+                  </span>
+                </h1>
 
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="px-8 btn-hover">
-                <Link to="/register">
-                  Start Tracking Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="px-8 interactive-hover">
-                <Link to="/login">Book a Demo</Link>
-              </Button>
+                <p className="mb-8 text-lg lg:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+                  The definitive, AI-powered platform to organize, track, and optimize every stage of your
+                  <span className="font-semibold text-primary mx-1">Job Application Journey</span>
+                  with smart automation and predictive insights.
+                </p>
+
+                {/* Stats */}
+                <div className="mb-10 flex flex-wrap gap-6">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-primary/10 p-2">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold">
+                        <CountUp end={50000} duration={2} separator="," />+
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Job Hunters</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-green-500/10 p-2">
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold">
+                        <CountUp end={87} duration={2} suffix="%" />
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-purple-500/10 p-2">
+                      <Briefcase className="h-5 w-5 text-purple-500" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold">
+                        <CountUp start={0} end={2.5} decimals={1} duration={2} />
+                        <span className="font-normal">x</span>
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Faster Hires</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="relative px-8 group overflow-hidden"
+                  >
+                    <Link to="/register">
+                      <span className="relative z-10 flex items-center">
+                        Start Tracking Free
+                        <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                      <span className="absolute inset-0 bg-gradient-to-r from-primary to-purple-600 group-hover:from-purple-600 group-hover:to-primary transition-all duration-300" />
+                    </Link>
+                  </Button>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="px-8 group border-2 hover:border-primary hover:bg-primary/5"
+                  >
+                    <Link to="/login" className="flex items-center gap-2">
+                      <div className="relative">
+                        <div className="absolute -inset-1 rounded-lg bg-primary/20 blur group-hover:bg-primary/40 transition-all" />
+                        <Play className="h-5 w-5 relative z-10" />
+                      </div>
+                      Watch Demo (2 min)
+                    </Link>
+                  </Button>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Trusted by teams at
+                  </p>
+                  <div className="flex flex-wrap items-center gap-6 opacity-70">
+                    {['Google', 'Microsoft', 'Airbnb', 'Stripe', 'Spotify'].map((company) => (
+                      <div
+                        key={company}
+                        className="text-lg font-semibold text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                      >
+                        {company}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side - Interactive Preview */}
+              <div className="lg:w-1/2 relative">
+                <div className="relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-2xl animate-float">
+                  {/* Main Preview Content */}
+                  <div className="relative z-10">
+                    <div className="mb-6 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-red-500" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                      </div>
+                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Live Dashboard Preview
+                      </div>
+                    </div>
+
+                    {/* Mock Kanban Board */}
+                    <div className="space-y-4">
+                      {[
+                        { title: 'Applied', count: 12, color: 'bg-blue-500' },
+                        { title: 'Interview', count: 4, color: 'bg-yellow-500' },
+                        { title: 'Offer', count: 2, color: 'bg-green-500' },
+                        { title: 'Rejected', count: 6, color: 'bg-red-500' }
+                      ].map((column) => (
+                        <div key={column.title} className="flex items-center justify-between p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:translate-x-2 transition-transform duration-300">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-3 h-3 rounded-full ${column.color}`} />
+                            <span className="font-medium">{column.title}</span>
+                          </div>
+                          <div className="px-3 py-1 rounded-full bg-white dark:bg-gray-900 text-sm font-bold">
+                            {column.count}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* AI Assistant Preview */}
+                    <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-purple-500 flex items-center justify-center">
+                          <Sparkles className="h-4 w-4 text-white" />
+                        </div>
+                        <div className="font-medium">AI Assistant</div>
+                      </div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        "Your resume score increased by 32%! Ready to apply to 3 new matching jobs."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
