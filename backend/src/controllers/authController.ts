@@ -95,7 +95,16 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
       },
     });
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    // Handle multer errors specifically
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      res.status(400).json({ message: 'File size too large. Maximum size is 5MB.' });
+      return;
+    }
+    if (error.message && error.message.includes('Only')) {
+      res.status(400).json({ message: error.message });
+      return;
+    }
+    res.status(400).json({ message: error.message || 'Failed to update profile' });
   }
 };
 

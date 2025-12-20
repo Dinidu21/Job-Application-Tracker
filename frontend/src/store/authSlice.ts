@@ -19,12 +19,22 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials: LoginCredentials, { rejectWithValue }) => {
+  async (credentials: LoginCredentials, { rejectWithValue, dispatch }) => {
     try {
       const response = await AuthService.login(credentials);
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
-      return response;
+
+      // Fetch fresh user data to ensure we have the latest profile information
+      try {
+        const freshUserData = await AuthService.getProfile();
+        localStorage.setItem('user', JSON.stringify(freshUserData));
+        return { ...response, user: freshUserData };
+      } catch (profileError) {
+        // If fetching profile fails, use the login response data
+        console.warn('Failed to fetch fresh user profile:', profileError);
+        return response;
+      }
     } catch (error: any) {
       return rejectWithValue(handleApiError(error, 'Login failed'));
     }
@@ -38,7 +48,17 @@ export const register = createAsyncThunk(
       const response = await AuthService.register(credentials);
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
-      return response;
+
+      // Fetch fresh user data to ensure we have the latest profile information
+      try {
+        const freshUserData = await AuthService.getProfile();
+        localStorage.setItem('user', JSON.stringify(freshUserData));
+        return { ...response, user: freshUserData };
+      } catch (profileError) {
+        // If fetching profile fails, use the register response data
+        console.warn('Failed to fetch fresh user profile:', profileError);
+        return response;
+      }
     } catch (error: any) {
       return rejectWithValue(handleApiError(error, 'Registration failed'));
     }
@@ -54,6 +74,19 @@ export const updateProfile = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue(handleApiError(error, 'Profile update failed'));
+    }
+  }
+);
+
+export const fetchCurrentUser = createAsyncThunk(
+  'auth/fetchCurrentUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await AuthService.getProfile();
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
+    } catch (error: any) {
+      return rejectWithValue(handleApiError(error, 'Failed to fetch user profile'));
     }
   }
 );
@@ -118,9 +151,24 @@ const authSlice = createSlice({
       .addCase(updateProfile.fulfilled, (state, action: PayloadAction<UpdateProfileResponse>) => {
         state.loading = false;
         state.user = action.payload.user;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
         state.error = null;
       })
       .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.loading = false;
+        state.user = action.payload;
+        localStorage.setItem('user', JSON.stringify(action.payload));
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

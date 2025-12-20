@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance';
-import { AuthResponse, LoginCredentials, RegisterCredentials, UpdateProfileRequest, UpdateProfileResponse } from '../types/user';
+import { AuthResponse, LoginCredentials, RegisterCredentials, UpdateProfileRequest, UpdateProfileResponse, User } from '../types/user';
 
 /**
  * Authentication Service
@@ -33,9 +33,8 @@ class AuthService {
      * @returns Promise with UpdateProfileResponse
      */
     static async updateProfile(profileData: UpdateProfileRequest | FormData): Promise<UpdateProfileResponse> {
-        const config = profileData instanceof FormData
-            ? { headers: { 'Content-Type': 'multipart/form-data' } }
-            : {};
+        // Don't set Content-Type for FormData - let axios set it automatically
+        const config = profileData instanceof FormData ? {} : {};
         const response = await axiosInstance.put<UpdateProfileResponse>('/auth/profile', profileData, config);
         return response.data;
     }
@@ -44,9 +43,9 @@ class AuthService {
      * Get current user profile
      * @returns Promise with User data
      */
-    static async getProfile(): Promise<AuthResponse> {
-        const response = await axiosInstance.get<AuthResponse>('/auth/profile');
-        return response.data;
+    static async getProfile(): Promise<User> {
+        const response = await axiosInstance.get<{ user: User }>('/auth/me');
+        return response.data.user;
     }
 
     /**

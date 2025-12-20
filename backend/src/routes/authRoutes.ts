@@ -26,7 +26,32 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow images and PDFs
+    if (file.fieldname === 'profileImage') {
+      if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files are allowed for profile pictures'));
+      }
+    } else if (file.fieldname === 'resume') {
+      if (file.mimetype === 'application/pdf' ||
+        file.mimetype === 'application/msword' ||
+        file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+        cb(null, true);
+      } else {
+        cb(new Error('Only PDF and Word documents are allowed for resumes'));
+      }
+    } else {
+      cb(null, true);
+    }
+  }
+});
 
 router.post(
   '/register',
@@ -60,6 +85,14 @@ router.put(
     body('name').optional().trim().notEmpty().withMessage('Name cannot be empty'),
     body('email').optional().isEmail().withMessage('Please provide a valid email'),
   ],
+  updateProfile
+);
+
+// Alternative route for testing - single file upload
+router.put(
+  '/profile/single',
+  protect,
+  upload.single('file'),
   updateProfile
 );
 

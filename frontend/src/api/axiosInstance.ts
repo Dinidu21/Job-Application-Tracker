@@ -2,9 +2,7 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Don't set default Content-Type to allow automatic detection for FormData
 });
 
 // Request interceptor to add token

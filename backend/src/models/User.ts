@@ -76,6 +76,10 @@ const userSchema = new Schema<IUser>(
       type: String,
       trim: true,
     },
+    profileImage: {
+      type: String,
+      trim: true,
+    },
     skills: {
       type: String,
       trim: true,
