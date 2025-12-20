@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { RootState, AppDispatch } from '../store/store';
 import { register } from '../store/authSlice';
-import { Briefcase, Mail, Lock, User } from 'lucide-react';
+import { Briefcase, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -34,6 +34,19 @@ const Register = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      {/* Back to Landing Page */}
+      <div className="fixed top-4 left-4 z-50">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate('/')}
+          className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+          aria-label="Back to landing page"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+      </div>
+
       {/* Theme Toggle */}
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />

@@ -39,10 +39,14 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-3">
-            <Button asChild variant="default" size="default">
+            <Button
+              asChild
+              className="group relative overflow-hidden bg-gradient-to-r from-primary to-purple-600 hover:from-purple-600 hover:to-primary border-0 shadow-lg hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+            >
               <Link to="/applications/new">
-                <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Plus className="mr-2 h-5 w-5" />
                 New Application
+                <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
             </Button>
 
