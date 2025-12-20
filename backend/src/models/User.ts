@@ -13,6 +13,7 @@ export interface IUser extends Document {
   currentCompany?: string;
   currentState?: string;
   resume?: string;
+  profileImage?: string;
   skills?: string;
   experience?: string;
   education?: string;

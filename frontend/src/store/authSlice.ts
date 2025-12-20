@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance';
+import { AuthService } from '../api';
+import { handleApiError } from '../utils/errorHandler';
 import { User, LoginCredentials, RegisterCredentials, AuthResponse, UpdateProfileRequest, UpdateProfileResponse } from '../types/user';
 
 interface AuthState {
@@ -20,12 +21,12 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<AuthResponse>('/auth/login', credentials);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      return response.data;
+      const response = await AuthService.login(credentials);
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      return rejectWithValue(handleApiError(error, 'Login failed'));
     }
   }
 );
@@ -34,12 +35,12 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials: RegisterCredentials, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<AuthResponse>('/auth/register', credentials);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      return response.data;
+      const response = await AuthService.register(credentials);
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Registration failed');
+      return rejectWithValue(handleApiError(error, 'Registration failed'));
     }
   }
 );
@@ -48,12 +49,11 @@ export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
   async (profileData: UpdateProfileRequest | FormData, { rejectWithValue }) => {
     try {
-      const config = profileData instanceof FormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {};
-      const response = await axiosInstance.put<UpdateProfileResponse>('/auth/profile', profileData, config);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      return response.data;
+      const response = await AuthService.updateProfile(profileData);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Profile update failed');
+      return rejectWithValue(handleApiError(error, 'Profile update failed'));
     }
   }
 );

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance';
+import { ApplicationService } from '../api';
+import { handleApiError } from '../utils/errorHandler';
 import {
   Application,
   CreateApplicationDTO,
@@ -28,18 +29,10 @@ export const fetchApplications = createAsyncThunk(
   'applications/fetchAll',
   async (filters: ApplicationFilters = {}, { rejectWithValue }) => {
     try {
-      const params = new URLSearchParams();
-      if (filters.status) params.append('status', filters.status);
-      if (filters.startDate) params.append('startDate', filters.startDate);
-      if (filters.endDate) params.append('endDate', filters.endDate);
-      if (filters.search) params.append('search', filters.search);
-
-      const response = await axiosInstance.get<Application[]>(
-        `/applications?${params.toString()}`
-      );
-      return response.data;
+      const applications = await ApplicationService.getApplications(filters);
+      return applications;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch applications');
+      return rejectWithValue(handleApiError(error, 'Failed to fetch applications'));
     }
   }
 );
@@ -48,10 +41,10 @@ export const fetchApplication = createAsyncThunk(
   'applications/fetchOne',
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get<Application>(`/applications/${id}`);
-      return response.data;
+      const application = await ApplicationService.getApplication(id);
+      return application;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch application');
+      return rejectWithValue(handleApiError(error, 'Failed to fetch application'));
     }
   }
 );
@@ -60,10 +53,10 @@ export const createApplication = createAsyncThunk(
   'applications/create',
   async (data: CreateApplicationDTO, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<Application>('/applications', data);
-      return response.data;
+      const application = await ApplicationService.createApplication(data);
+      return application;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to create application');
+      return rejectWithValue(handleApiError(error, 'Failed to create application'));
     }
   }
 );
@@ -72,10 +65,10 @@ export const updateApplication = createAsyncThunk(
   'applications/update',
   async ({ id, data }: { id: string; data: UpdateApplicationDTO }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put<Application>(`/applications/${id}`, data);
-      return response.data;
+      const application = await ApplicationService.updateApplication(id, data);
+      return application;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to update application');
+      return rejectWithValue(handleApiError(error, 'Failed to update application'));
     }
   }
 );
@@ -84,10 +77,10 @@ export const deleteApplication = createAsyncThunk(
   'applications/delete',
   async (id: string, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/applications/${id}`);
+      await ApplicationService.deleteApplication(id);
       return id;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to delete application');
+      return rejectWithValue(handleApiError(error, 'Failed to delete application'));
     }
   }
 );
@@ -96,10 +89,10 @@ export const fetchStats = createAsyncThunk(
   'applications/fetchStats',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get<ApplicationStats>('/applications/stats');
-      return response.data;
+      const stats = await ApplicationService.getStats();
+      return stats;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch stats');
+      return rejectWithValue(handleApiError(error, 'Failed to fetch stats'));
     }
   }
 );
