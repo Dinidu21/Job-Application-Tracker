@@ -37,6 +37,7 @@ export interface UpdateProfileDTO {
   currentCompany?: string;
   currentState?: string;
   resume?: string;
+  profileImage?: string;
 }
 
 export const registerUser = async (data: RegisterDTO): Promise<AuthResponse> => {
@@ -110,6 +111,10 @@ export const updateProfile = async (userId: string, data: UpdateProfileDTO): Pro
 
   if (data.resume !== undefined) {
     user.resume = data.resume;
+  }
+
+  if (data.profileImage !== undefined) {
+    user.profileImage = data.profileImage;
   }
 
   await user.save();

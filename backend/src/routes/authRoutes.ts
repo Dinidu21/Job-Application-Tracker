@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 import { body } from 'express-validator';
 import { register, login, getMe, googleAuth, updateProfile } from '../controllers/authController';
 import { protect } from '../middleware/authMiddleware';
@@ -8,10 +9,16 @@ import passport from '../config/passport';
 
 const router = express.Router();
 
+// Ensure uploads directory exists
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, uploadsDir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -45,7 +52,10 @@ router.get('/me', protect, getMe);
 router.put(
   '/profile',
   protect,
-  upload.single('resume'),
+  upload.fields([
+    { name: 'resume', maxCount: 1 },
+    { name: 'profileImage', maxCount: 1 }
+  ]),
   [
     body('name').optional().trim().notEmpty().withMessage('Name cannot be empty'),
     body('email').optional().isEmail().withMessage('Please provide a valid email'),

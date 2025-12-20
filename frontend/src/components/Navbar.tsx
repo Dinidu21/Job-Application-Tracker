@@ -7,15 +7,12 @@ import { useState } from 'react';
 import Button from './ui/Button';
 import Avatar from './ui/Avatar';
 import ThemeToggle from './ThemeToggle';
-import Modal from './ui/Modal';
-import ProfileForm from './ProfileForm';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -51,13 +48,15 @@ const Navbar = () => {
 
             <div className="ml-2 flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-3 py-2 backdrop-blur-sm">
               <ThemeToggle />
-              <Avatar
-                fallback={user?.name || 'U'}
-                size="sm"
-                className="cursor-pointer"
-                onClick={() => setProfileModalOpen(true)}
-              />
-              <span className="text-sm font-medium text-foreground">{user?.name}</span>
+              <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <Avatar
+                  src={user?.profileImage ? `/uploads/${user.profileImage}` : undefined}
+                  fallback={user?.name || 'U'}
+                  size="sm"
+                  className="cursor-pointer"
+                />
+                <span className="text-sm font-medium text-foreground">{user?.name}</span>
+              </Link>
               <Button
                 variant="ghost"
                 size="sm"
@@ -101,15 +100,15 @@ const Navbar = () => {
                 </Link>
               </Button>
               <div className="flex items-center justify-between px-2 py-2">
-                <div className="flex items-center gap-3">
+                <Link to="/profile" className="flex items-center gap-3 hover:opacity-80 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                   <Avatar
+                    src={user?.profileImage ? `/uploads/${user.profileImage}` : undefined}
                     fallback={user?.name || 'U'}
                     size="sm"
                     className="cursor-pointer"
-                    onClick={() => setProfileModalOpen(true)}
                   />
                   <span className="text-sm font-medium text-foreground">{user?.name}</span>
-                </div>
+                </Link>
                 <div className="flex items-center gap-2">
                   <ThemeToggle />
                   <Button
@@ -126,14 +125,6 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-
-      <Modal
-        isOpen={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-        title="Profile Management"
-      >
-        <ProfileForm onSuccess={() => setProfileModalOpen(false)} />
-      </Modal>
     </header>
   );
 };

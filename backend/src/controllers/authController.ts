@@ -62,8 +62,17 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
     }
 
     const updateData = { ...req.body };
-    if (req.file) {
-      updateData.resume = req.file.path;
+    if (req.files) {
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      if (files.resume && files.resume[0]) {
+        updateData.resume = files.resume[0].filename;
+      }
+      if (files.profileImage && files.profileImage[0]) {
+        updateData.profileImage = files.profileImage[0].filename;
+      }
+    } else if (req.file) {
+      // Fallback for single file upload
+      updateData.resume = req.file.filename;
     }
 
     const result = await authService.updateProfile(req.user!.id, updateData);
@@ -79,6 +88,7 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         currentCompany: result.currentCompany,
         currentState: result.currentState,
         resume: result.resume,
+        profileImage: result.profileImage,
         skills: result.skills,
         experience: result.experience,
         education: result.education,

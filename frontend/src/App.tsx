@@ -12,6 +12,7 @@ const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const ApplicationForm = lazy(() => import('./pages/ApplicationForm'));
 const ApplicationDetails = lazy(() => import('./pages/ApplicationDetails'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 const LoadingFallback = () => (
   <div className="flex min-h-screen items-center justify-center">
@@ -65,6 +66,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ApplicationDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

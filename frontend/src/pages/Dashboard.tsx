@@ -198,7 +198,6 @@ const Dashboard = () => {
   const { applications, stats, loading, filters } = useSelector(
     (state: RootState) => state.applications
   );
-  const { user } = useSelector((state: RootState) => state.auth);
 
   const [searchTerm, setSearchTerm] = useState(filters.search || '');
   const [statusFilter, setStatusFilter] = useState<ApplicationStatus | 'all'>(

@@ -12,6 +12,7 @@ export interface User {
   skills?: string;
   experience?: string;
   education?: string;
+  profileImage?: string;
 }
 
 export interface AuthResponse {
@@ -42,6 +43,7 @@ export interface UpdateProfileRequest {
   skills?: string;
   experience?: string;
   education?: string;
+  profileImage?: string;
 }
 
 export interface UpdateProfileResponse {
