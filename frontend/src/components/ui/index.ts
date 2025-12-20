@@ -22,4 +22,10 @@ export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 export { Form, FormGroup, FormLabel, FormError, FormHelper } from './Form';
 export { default as Marquee } from './Marquee';
 export type { MarqueeProps } from './Marquee';
+export { default as Badge } from './Badge';
+export type { BadgeProps } from './Badge';
+export { default as Progress } from './Progress';
+export type { ProgressProps } from './Progress';
+export { default as Tooltip } from './Tooltip';
+export type { TooltipProps } from './Tooltip';
 

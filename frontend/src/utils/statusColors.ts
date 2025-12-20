@@ -22,3 +22,14 @@ export const getStatusBadgeColor = (status: ApplicationStatus): string => {
   return colors[status];
 };
 
+
+export const getStatusGradient = (status: string): string => {
+  const gradients: Record<string, string> = {
+    applied: 'from-blue-500 to-cyan-500',
+    interview: 'from-yellow-500 to-orange-500',
+    offer: 'from-green-500 to-emerald-500',
+    rejected: 'from-red-500 to-pink-500',
+    withdrawn: 'from-gray-500 to-gray-700',
+  };
+  return gradients[status] || 'from-gray-500 to-gray-700';
+};
