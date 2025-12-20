@@ -1,10 +1,25 @@
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
 import { body } from 'express-validator';
-import { register, login, getMe, googleAuth } from '../controllers/authController';
+import { register, login, getMe, googleAuth, updateProfile } from '../controllers/authController';
 import { protect } from '../middleware/authMiddleware';
 import passport from '../config/passport';
 
 const router = express.Router();
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
 
 router.post(
   '/register',
@@ -26,6 +41,17 @@ router.post(
 );
 
 router.get('/me', protect, getMe);
+
+router.put(
+  '/profile',
+  protect,
+  upload.single('resume'),
+  [
+    body('name').optional().trim().notEmpty().withMessage('Name cannot be empty'),
+    body('email').optional().isEmail().withMessage('Please provide a valid email'),
+  ],
+  updateProfile
+);
 
 // Google OAuth routes
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

@@ -28,6 +28,17 @@ export interface GoogleAuthData {
   email: string;
 }
 
+export interface UpdateProfileDTO {
+  name?: string;
+  email?: string;
+  address?: string;
+  phone?: string;
+  currentRole?: string;
+  currentCompany?: string;
+  currentState?: string;
+  resume?: string;
+}
+
 export const registerUser = async (data: RegisterDTO): Promise<AuthResponse> => {
   const { name, email, password } = data;
 
@@ -56,6 +67,53 @@ export const registerUser = async (data: RegisterDTO): Promise<AuthResponse> => 
     },
     token,
   };
+};
+
+export const updateProfile = async (userId: string, data: UpdateProfileDTO): Promise<IUser> => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  if (data.name !== undefined) {
+    user.name = data.name;
+  }
+
+  if (data.email !== undefined) {
+    // Check if email is already taken by another user
+    const existingUser = await User.findOne({ email: data.email });
+    if (existingUser && existingUser._id.toString() !== userId) {
+      throw new Error('Email already in use');
+    }
+    user.email = data.email;
+  }
+
+  if (data.address !== undefined) {
+    user.address = data.address;
+  }
+
+  if (data.phone !== undefined) {
+    user.phone = data.phone;
+  }
+
+  if (data.currentRole !== undefined) {
+    user.currentRole = data.currentRole;
+  }
+
+  if (data.currentCompany !== undefined) {
+    user.currentCompany = data.currentCompany;
+  }
+
+  if (data.currentState !== undefined) {
+    user.currentState = data.currentState;
+  }
+
+  if (data.resume !== undefined) {
+    user.resume = data.resume;
+  }
+
+  await user.save();
+  return user;
 };
 
 export const loginUser = async (data: LoginDTO): Promise<AuthResponse> => {

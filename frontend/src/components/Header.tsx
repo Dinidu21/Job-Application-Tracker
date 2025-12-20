@@ -19,15 +19,17 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link 
-            to="/dashboard" 
+          <Link
+            to="/dashboard"
             className="group flex items-center gap-3 text-xl font-bold transition-all duration-200 hover:scale-105"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-lg shadow-primary/20 transition-all duration-200 group-hover:shadow-xl group-hover:shadow-primary/30">
               <Briefcase className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Job Tracker
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-primary 
+                            bg-clip-text text-transparent 
+                            animate-gradient-x bg-[length:200%_auto]">
+              JobPath
             </span>
           </Link>
 

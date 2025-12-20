@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 
 interface TokenPayload {
   id: string;
@@ -7,7 +7,7 @@ interface TokenPayload {
 }
 
 export const generateToken = (payload: TokenPayload): string => {
-  return jwt.sign(payload, process.env.JWT_SECRET || 'fallback-secret', {
+  return jwt.sign(payload, (process.env.JWT_SECRET || 'fallback-secret') as Secret, {
     expiresIn: process.env.JWT_EXPIRE || '7d',
   });
 };

@@ -7,6 +7,15 @@ export interface IUser extends Document {
   password?: string;
   googleId?: string;
   role: 'user' | 'admin';
+  address?: string;
+  phone?: string;
+  currentRole?: string;
+  currentCompany?: string;
+  currentState?: string;
+  resume?: string;
+  skills?: string;
+  experience?: string;
+  education?: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -41,6 +50,42 @@ const userSchema = new Schema<IUser>(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
+    },
+    address: {
+      type: String,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      trim: true,
+    },
+    currentRole: {
+      type: String,
+      trim: true,
+    },
+    currentCompany: {
+      type: String,
+      trim: true,
+    },
+    currentState: {
+      type: String,
+      trim: true,
+    },
+    resume: {
+      type: String,
+      trim: true,
+    },
+    skills: {
+      type: String,
+      trim: true,
+    },
+    experience: {
+      type: String,
+      trim: true,
+    },
+    education: {
+      type: String,
+      trim: true,
     },
   },
   {

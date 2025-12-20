@@ -3,6 +3,15 @@ export interface User {
   name: string;
   email: string;
   role: 'user' | 'admin';
+  address?: string;
+  phone?: string;
+  currentRole?: string;
+  currentCompany?: string;
+  currentState?: string;
+  resume?: string;
+  skills?: string;
+  experience?: string;
+  education?: string;
 }
 
 export interface AuthResponse {
@@ -19,5 +28,23 @@ export interface RegisterCredentials {
   name: string;
   email: string;
   password: string;
+}
+
+export interface UpdateProfileRequest {
+  name?: string;
+  email?: string;
+  address?: string;
+  phone?: string;
+  currentRole?: string;
+  currentCompany?: string;
+  currentState?: string;
+  resume?: string;
+  skills?: string;
+  experience?: string;
+  education?: string;
+}
+
+export interface UpdateProfileResponse {
+  user: User;
 }
 

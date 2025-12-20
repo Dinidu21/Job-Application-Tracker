@@ -53,3 +53,39 @@ export const googleAuth = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
+export const updateProfile = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
+    const updateData = { ...req.body };
+    if (req.file) {
+      updateData.resume = req.file.path;
+    }
+
+    const result = await authService.updateProfile(req.user!.id, updateData);
+    res.status(200).json({
+      user: {
+        id: result._id.toString(),
+        name: result.name,
+        email: result.email,
+        role: result.role,
+        address: result.address,
+        phone: result.phone,
+        currentRole: result.currentRole,
+        currentCompany: result.currentCompany,
+        currentState: result.currentState,
+        resume: result.resume,
+        skills: result.skills,
+        experience: result.experience,
+        education: result.education,
+      },
+    });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+

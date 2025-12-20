@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../api/axiosInstance';
-import { User, LoginCredentials, RegisterCredentials, AuthResponse } from '../types/user';
+import { User, LoginCredentials, RegisterCredentials, AuthResponse, UpdateProfileRequest, UpdateProfileResponse } from '../types/user';
 
 interface AuthState {
   user: User | null;
@@ -40,6 +40,20 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Registration failed');
+    }
+  }
+);
+
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (profileData: UpdateProfileRequest | FormData, { rejectWithValue }) => {
+    try {
+      const config = profileData instanceof FormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {};
+      const response = await axiosInstance.put<UpdateProfileResponse>('/auth/profile', profileData, config);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Profile update failed');
     }
   }
 );
@@ -94,6 +108,19 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action: PayloadAction<UpdateProfileResponse>) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.error = null;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -2,17 +2,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { logout } from '../store/authSlice';
-import { Briefcase, Plus, LogOut, Menu, X } from 'lucide-react';
+import { Plus, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import Button from './ui/Button';
 import Avatar from './ui/Avatar';
 import ThemeToggle from './ThemeToggle';
+import Modal from './ui/Modal';
+import ProfileForm from './ProfileForm';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -30,11 +33,10 @@ const Navbar = () => {
             className="group flex items-center gap-3 text-xl font-bold transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg"
             aria-label="Job Tracker - Home"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-lg shadow-primary/20 transition-all duration-200 group-hover:shadow-xl group-hover:shadow-primary/30">
-              <Briefcase className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
-            </div>
-            <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Job Tracker
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-primary 
+                            bg-clip-text text-transparent 
+                            animate-gradient-x bg-[length:200%_auto]">
+              JobPath
             </span>
           </Link>
 
@@ -49,7 +51,12 @@ const Navbar = () => {
 
             <div className="ml-2 flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-3 py-2 backdrop-blur-sm">
               <ThemeToggle />
-              <Avatar fallback={user?.name || 'U'} size="sm" />
+              <Avatar
+                fallback={user?.name || 'U'}
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => setProfileModalOpen(true)}
+              />
               <span className="text-sm font-medium text-foreground">{user?.name}</span>
               <Button
                 variant="ghost"
@@ -95,7 +102,12 @@ const Navbar = () => {
               </Button>
               <div className="flex items-center justify-between px-2 py-2">
                 <div className="flex items-center gap-3">
-                  <Avatar fallback={user?.name || 'U'} size="sm" />
+                  <Avatar
+                    fallback={user?.name || 'U'}
+                    size="sm"
+                    className="cursor-pointer"
+                    onClick={() => setProfileModalOpen(true)}
+                  />
                   <span className="text-sm font-medium text-foreground">{user?.name}</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -114,6 +126,14 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+
+      <Modal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+        title="Profile Management"
+      >
+        <ProfileForm onSuccess={() => setProfileModalOpen(false)} />
+      </Modal>
     </header>
   );
 };

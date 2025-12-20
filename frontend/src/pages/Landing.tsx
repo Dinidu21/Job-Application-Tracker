@@ -743,7 +743,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative overflow-hidden border-t border-gray-200/20 dark:border-gray-800/20 bg-gradient-to-b from-background via-background to-gray-50/10 dark:to-gray-900/5">
+      <footer id="contact" className="relative overflow-hidden border-t border-gray-200/20 dark:border-gray-800/20 bg-gradient-to-b from-background via-background to-gray-50/10 dark:to-gray-900/5">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
