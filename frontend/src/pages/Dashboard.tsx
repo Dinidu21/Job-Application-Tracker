@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState, AppDispatch } from '../store/store';
@@ -9,7 +9,7 @@ import {
   deleteApplication,
 } from '../store/applicationSlice';
 import Navbar from '../components/Navbar';
-import { getStatusColor, getStatusGradient } from '../utils/statusColors';
+import { getStatusGradient } from '../utils/statusColors';
 import { Application, ApplicationStatus, ApplicationStats } from '../types/application';
 import { format } from 'date-fns';
 import {
@@ -24,27 +24,24 @@ import {
   TrendingUp,
   Briefcase,
   Clock,
-  CheckCircle2,
   FileText,
   Sparkles,
   ChevronRight,
   Plus,
-  ExternalLink,
   MoreVertical,
   BarChart3,
   Target,
   Zap,
   Award,
-  TrendingDown,
-  User,
   Building,
   Layers,
   Download,
   Share2,
   Star,
   AlertCircle,
+  AlertTriangle,
 } from 'lucide-react';
-import { Card, EmptyState, Button, Input, Select, Badge, Avatar, Progress, Tooltip } from '../components/ui';
+import { Card, EmptyState, Button, Input, Select, Badge, Progress, Tooltip } from '../components/ui';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
@@ -118,7 +115,7 @@ const StatCard = ({
                   </>
                 ) : (
                   <>
-                    <TrendingDown className="h-3 w-3 text-red-400" />
+                    <AlertTriangle className="h-3 w-3 text-red-400" />
                     <span className="text-red-400">{trend}%</span>
                   </>
                 )}
@@ -387,7 +384,7 @@ const PipelineView = ({ stats }: { stats: ApplicationStats }) => {
       </div>
 
       <div className="space-y-4">
-        {stages.map((stage, index) => {
+        {stages.map((stage) => {
           const Icon = stage.icon;
           const count = stats.byStatus[stage.key as keyof ApplicationStats['byStatus']] || 0;
           const percentage = total > 0 ? (count / total) * 100 : 0;

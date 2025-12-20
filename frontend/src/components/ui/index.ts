@@ -20,8 +20,6 @@ export { default as ToastContainer } from './ToastContainer';
 export type { ToastContainerProps } from './ToastContainer';
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './Table';
 export { Form, FormGroup, FormLabel, FormError, FormHelper } from './Form';
-export { default as Marquee } from './Marquee';
-export type { MarqueeProps } from './Marquee';
 export { default as Badge } from './Badge';
 export type { BadgeProps } from './Badge';
 export { default as Progress } from './Progress';
