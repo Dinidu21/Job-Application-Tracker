@@ -440,7 +440,7 @@ const Landing = () => {
 
             {/* Top Marquee - Left to Right */}
             <div className="flex flex-nowrap gap-8 lg:gap-12 py-4 group">
-              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_40s_linear_infinite] 
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_20s_linear_infinite]
                 group-hover:[animation-play-state:paused] will-change-transform">
                 {[
                   { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
@@ -477,7 +477,7 @@ const Landing = () => {
               </div>
 
               {/* Duplicate for seamless loop */}
-              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_40s_linear_infinite] 
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_20s_linear_infinite]
                 group-hover:[animation-play-state:paused] will-change-transform">
                 {[
                   { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
@@ -507,7 +507,7 @@ const Landing = () => {
 
             {/* Bottom Marquee - Right to Left (Reverse) */}
             <div className="flex flex-nowrap gap-8 lg:gap-12 py-4 group mt-8">
-              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_45s_linear_infinite_reverse] 
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_25s_linear_infinite_reverse]
                 group-hover:[animation-play-state:paused] will-change-transform">
                 {[
                   { name: 'Tesla', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' },
@@ -535,7 +535,7 @@ const Landing = () => {
               </div>
 
               {/* Duplicate for seamless loop */}
-              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_45s_linear_infinite_reverse] 
+              <div className="flex shrink-0 justify-around gap-8 lg:gap-12 animate-[marquee_25s_linear_infinite_reverse]
                 group-hover:[animation-play-state:paused] will-change-transform">
                 {[
                   { name: 'Tesla', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' },
