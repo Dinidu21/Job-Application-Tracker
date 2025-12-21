@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     const navigationItems = [
         {
             name: 'Dashboard',
-            href: '/',
+            href: '/dashboard',
             icon: LayoutDashboard,
             description: 'Overview & Analytics',
         },
@@ -45,12 +45,6 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             href: '/analytics',
             icon: BarChart3,
             description: 'Detailed Insights',
-        },
-        {
-            name: 'AI Insights',
-            href: '/insights',
-            icon: Sparkles,
-            description: 'Smart Recommendations',
         },
         {
             name: 'Profile',
@@ -217,11 +211,26 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                 >
                     <div className="relative">
                         {user?.profileImage ? (
-                            <img
-                                src={user.profileImage}
-                                alt={user.name}
-                                className="w-8 h-8 rounded-full object-cover border-2 border-primary/30"
-                            />
+                            <>
+                                <img
+                                    src={`/uploads/${user.profileImage}`}
+                                    alt={user.name}
+                                    className="w-8 h-8 rounded-full object-cover border-2 border-primary/30"
+                                    onError={(e) => {
+                                        // Fallback to default avatar if image fails to load
+                                        const target = e.target as HTMLImageElement;
+                                        target.style.display = 'none';
+                                        const parent = target.parentElement;
+                                        if (parent) {
+                                            const fallback = parent.querySelector('.fallback-avatar') as HTMLElement;
+                                            if (fallback) fallback.style.display = 'flex';
+                                        }
+                                    }}
+                                />
+                                <div className="fallback-avatar w-8 h-8 bg-gradient-to-r from-primary to-purple-500 rounded-full items-center justify-center hidden">
+                                    <User className="h-4 w-4 text-white" />
+                                </div>
+                            </>
                         ) : (
                             <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-500 rounded-full flex items-center justify-center">
                                 <User className="h-4 w-4 text-white" />

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
+import { useTheme } from '../../contexts/ThemeContext';
 import {
   Bell,
   Search,
@@ -11,6 +12,7 @@ import {
   Sun,
   Moon,
   Menu,
+  Monitor,
 } from 'lucide-react';
 import { Button } from '../ui';
 import { motion } from 'framer-motion';
@@ -22,6 +24,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const { theme, setTheme, actualTheme } = useTheme();
 
   const notifications = [
     { id: 1, title: 'New application response', time: '2m ago', unread: true },
@@ -59,9 +62,26 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
       {/* Right Section */}
       <div className="flex items-center gap-4">
         {/* Theme Toggle */}
-        <Button variant="ghost" size="sm" className="hidden md:flex">
-          <Sun className="h-4 w-4" />
-        </Button>
+        <div className="hidden md:flex">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="relative overflow-hidden"
+          >
+            <motion.div
+              initial={false}
+              animate={{ rotate: actualTheme === 'dark' ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {actualTheme === 'dark' ? (
+                <Moon className="h-4 w-4" />
+              ) : (
+                <Sun className="h-4 w-4" />
+              )}
+            </motion.div>
+          </Button>
+        </div>
 
         {/* Notifications */}
         <div className="relative">
@@ -87,9 +107,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
               {notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`p-3 border-b border-white/5 hover:bg-white/5 transition-colors ${
-                    notification.unread ? 'bg-primary/5' : ''
-                  }`}
+                  className={`p-3 border-b border-white/5 hover:bg-white/5 transition-colors ${notification.unread ? 'bg-primary/5' : ''
+                    }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
