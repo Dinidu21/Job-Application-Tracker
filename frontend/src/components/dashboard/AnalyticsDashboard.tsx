@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { motion } from 'framer-motion';
 import {
     TrendingUp,
     TrendingDown,
-    Users,
     Target,
     Clock,
     Award,
     BarChart3,
     PieChart,
     Activity,
-    Calendar,
-    DollarSign,
     Building,
 } from 'lucide-react';
-import { ApplicationStats } from '../../types/application';
 import { cn } from '../../utils/cn';
 
 // Mock data for enhanced analytics

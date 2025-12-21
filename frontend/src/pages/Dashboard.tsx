@@ -21,26 +21,23 @@ import {
   Calendar,
   MapPin,
   DollarSign,
-  TrendingUp,
   FileText,
   Sparkles,
   Plus,
   Layers,
   BarChart3,
-  Award,
   Building,
   Target,
   AlertCircle,
   Rocket,
   Trophy,
-  Network,
   Sparkle,
   Brain,
   Activity,
   Clock,
   Users,
 } from 'lucide-react';
-import { EmptyState, Button, Input, Select, Badge, Progress, Tooltip } from '../components/ui';
+import { EmptyState, Button, Input, Select, Badge, Tooltip } from '../components/ui';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 // 3D Tilt Card Component
@@ -386,7 +383,7 @@ const HolographicCard = ({
 // Main Dashboard Component
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { applications, stats, loading, filters } = useSelector(
+  const { applications, loading, filters } = useSelector(
     (state: RootState) => state.applications
   );
 
