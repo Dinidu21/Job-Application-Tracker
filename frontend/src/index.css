@@ -75,7 +75,22 @@
   }
 
   html {
-    @apply scroll-smooth;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    /* Account for fixed navbar */
+    /* Enhanced smooth scrolling */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enhanced smooth scrolling for better performance */
+  * {
+    scroll-behavior: inherit;
+  }
+
+  /* Improve scroll performance */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -715,18 +730,23 @@
 }
 
 @keyframes float-particle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.7;
   }
+
   25% {
     transform: translateY(-10px) rotate(90deg);
     opacity: 1;
   }
+
   50% {
     transform: translateY(-5px) rotate(180deg);
     opacity: 0.8;
   }
+
   75% {
     transform: translateY(-15px) rotate(270deg);
     opacity: 0.9;

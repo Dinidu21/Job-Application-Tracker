@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import ProtectedRoute from './components/ProtectedRoute';
+import { initializeSmoothScrolling } from './utils/smoothScroll';
 
 // Lazy load pages for better performance
 const Landing = lazy(() => import('./pages/Landing'));
@@ -22,6 +23,11 @@ const LoadingFallback = () => (
 
 function App() {
   const { token } = useSelector((state: RootState) => state.auth);
+
+  // Initialize enhanced smooth scrolling
+  useEffect(() => {
+    initializeSmoothScrolling();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
