@@ -136,11 +136,26 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
           <Button variant="ghost" className="flex items-center gap-3 p-2">
             <div className="relative">
               {user?.profileImage ? (
-                <img
-                  src={user.profileImage}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
+                <>
+                  <img
+                    src={`/uploads/${user.profileImage}`}
+                    alt={user.name}
+                    className="w-8 h-8 rounded-full object-cover"
+                    onError={(e) => {
+                      // Fallback to default avatar if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        const fallback = parent.querySelector('.fallback-avatar') as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }
+                    }}
+                  />
+                  <div className="fallback-avatar w-8 h-8 bg-gradient-to-r from-primary to-purple-500 rounded-full items-center justify-center hidden">
+                    <User className="h-4 w-4 text-white" />
+                  </div>
+                </>
               ) : (
                 <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-500 rounded-full flex items-center justify-center">
                   <User className="h-4 w-4 text-white" />
@@ -158,11 +173,26 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
             <div className="p-3 border-b border-white/10">
               <div className="flex items-center gap-3">
                 {user?.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt={user.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  <>
+                    <img
+                      src={`/uploads/${user.profileImage}`}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                      onError={(e) => {
+                        // Fallback to default avatar if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          const fallback = parent.querySelector('.dropdown-fallback-avatar') as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }
+                      }}
+                    />
+                    <div className="dropdown-fallback-avatar w-10 h-10 bg-gradient-to-r from-primary to-purple-500 rounded-full items-center justify-center hidden">
+                      <User className="h-5 w-5 text-white" />
+                    </div>
+                  </>
                 ) : (
                   <div className="w-10 h-10 bg-gradient-to-r from-primary to-purple-500 rounded-full flex items-center justify-center">
                     <User className="h-5 w-5 text-white" />
