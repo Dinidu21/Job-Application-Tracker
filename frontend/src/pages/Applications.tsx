@@ -20,25 +20,14 @@ import {
     Calendar,
     MapPin,
     DollarSign,
-    TrendingUp,
-    FileText,
     Sparkles,
     Plus,
     Layers,
     BarChart3,
     Building,
-    Target,
-    AlertCircle,
-    Rocket,
-    Trophy,
-    Network,
     Sparkle,
-    Brain,
-    Activity,
-    Clock,
-    Users,
 } from 'lucide-react';
-import { EmptyState, Button, Input, Select, Badge, Progress, Tooltip } from '../components/ui';
+import { EmptyState, Button, Input, Select, Badge, Tooltip } from '../components/ui';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 // 3D Tilt Card Component
@@ -102,6 +91,7 @@ const HolographicCard = ({
     index: number;
 }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [imageError, setImageError] = useState(false);
     const statusGradient = getStatusGradient(app.status);
 
     return (
@@ -128,8 +118,17 @@ const HolographicCard = ({
                         <div className="flex items-center gap-4">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-purple-500/30 rounded-xl blur" />
-                                <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30 flex items-center justify-center">
-                                    <Building className="h-7 w-7 text-primary" />
+                                <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30 flex items-center justify-center overflow-hidden">
+                                    {app.companyLogo && !imageError ? (
+                                        <img
+                                            src={app.companyLogo}
+                                            alt={`${app.company} logo`}
+                                            className="w-full h-full object-cover rounded-xl"
+                                            onError={() => setImageError(true)}
+                                        />
+                                    ) : (
+                                        <Building className="h-7 w-7 text-primary" />
+                                    )}
                                 </div>
                             </div>
 
@@ -239,7 +238,7 @@ const HolographicCard = ({
 // Main Applications Component
 const Applications: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { applications, stats, loading, filters } = useSelector(
+    const { applications, loading, filters } = useSelector(
         (state: RootState) => state.applications
     );
 

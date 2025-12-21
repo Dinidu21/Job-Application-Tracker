@@ -20,6 +20,7 @@ import {
   Mail,
   User,
   Save,
+  Image,
 } from 'lucide-react';
 import { Button, Input, Textarea, Select, Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui';
 
@@ -42,6 +43,7 @@ const ApplicationForm = () => {
     jobUrl: '',
     contactEmail: '',
     contactName: '',
+    companyLogo: '',
   });
 
   useEffect(() => {
@@ -62,6 +64,7 @@ const ApplicationForm = () => {
             jobUrl: app.jobUrl || '',
             contactEmail: app.contactEmail || '',
             contactName: app.contactName || '',
+            companyLogo: app.companyLogo || '',
           });
         }
       });
@@ -129,6 +132,16 @@ const ApplicationForm = () => {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     leftIcon={<Building2 className="h-5 w-5" />}
+                  />
+
+                  <Input
+                    id="companyLogo"
+                    type="url"
+                    label="Company Logo URL"
+                    placeholder="https://example.com/logo.png"
+                    value={formData.companyLogo}
+                    onChange={(e) => setFormData({ ...formData, companyLogo: e.target.value })}
+                    leftIcon={<Image className="h-5 w-5" />}
                   />
 
                   <Input

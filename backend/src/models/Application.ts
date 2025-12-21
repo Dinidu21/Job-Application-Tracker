@@ -12,6 +12,7 @@ export interface IApplication extends Document {
   jobUrl?: string;
   contactEmail?: string;
   contactName?: string;
+  companyLogo?: string;
 }
 
 const applicationSchema = new Schema<IApplication>(
@@ -61,6 +62,10 @@ const applicationSchema = new Schema<IApplication>(
       trim: true,
     },
     contactName: {
+      type: String,
+      trim: true,
+    },
+    companyLogo: {
       type: String,
       trim: true,
     },

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '../store/store';
@@ -28,6 +28,7 @@ const ApplicationDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { applications, loading } = useSelector((state: RootState) => state.applications);
+  const [imageError, setImageError] = useState(false);
 
   const application = id
     ? applications.find((app) => app._id === id) || null
@@ -143,8 +144,17 @@ const ApplicationDetails = () => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10">
-                      <Briefcase className="h-8 w-8 text-primary" aria-hidden="true" />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 overflow-hidden">
+                      {application.companyLogo && !imageError ? (
+                        <img
+                          src={application.companyLogo}
+                          alt={`${application.company} logo`}
+                          className="h-full w-full object-cover rounded-2xl"
+                          onError={() => setImageError(true)}
+                        />
+                      ) : (
+                        <Briefcase className="h-8 w-8 text-primary" aria-hidden="true" />
+                      )}
                     </div>
                     <div className="flex-1">
                       <CardTitle className="mb-2 text-3xl bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">{application.company}</CardTitle>

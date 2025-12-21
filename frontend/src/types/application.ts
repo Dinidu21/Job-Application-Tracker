@@ -13,6 +13,7 @@ export interface Application {
   jobUrl?: string;
   contactEmail?: string;
   contactName?: string;
+  companyLogo?: string;
   isFavorite?: boolean;
   interviewStage?: number;
   tags?: string[];
@@ -31,6 +32,7 @@ export interface CreateApplicationDTO {
   jobUrl?: string;
   contactEmail?: string;
   contactName?: string;
+  companyLogo?: string;
 }
 
 export interface UpdateApplicationDTO extends Partial<CreateApplicationDTO> { }
