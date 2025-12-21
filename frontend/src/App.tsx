@@ -11,6 +11,7 @@ const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Analytics = lazy(() => import('./pages/Analytics'));
 const ApplicationForm = lazy(() => import('./pages/ApplicationForm'));
 const ApplicationDetails = lazy(() => import('./pages/ApplicationDetails'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -72,6 +73,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ApplicationDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <Analytics />
               </ProtectedRoute>
             }
           />
