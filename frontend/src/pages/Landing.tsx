@@ -252,54 +252,234 @@ const Landing = () => {
 
               {/* Right Side - Interactive Preview */}
               <div className="lg:w-1/2 relative">
-                <div className="relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-2xl animate-float">
-                  {/* Main Preview Content */}
-                  <div className="relative z-10">
-                    <div className="mb-6 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                {/* Floating container with modern glass morphism */}
+                <div className="relative rounded-3xl border border-gray-300/50 dark:border-gray-700/50 
+                                bg-gradient-to-br from-white/90 via-white/80 to-white/90 
+                                dark:from-gray-900/90 dark:via-gray-900/80 dark:to-gray-900/90 
+                                p-8 shadow-2xl shadow-primary/10 dark:shadow-primary/5 
+                                backdrop-blur-xl animate-float-smooth">
+
+                  {/* Glow effect */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 
+                                  rounded-3xl blur-xl opacity-30 dark:opacity-20" />
+
+                  {/* Browser-style header */}
+                  <div className="mb-8 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500 hover:scale-110 transition-transform cursor-pointer" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-400 dark:bg-yellow-500 hover:scale-110 transition-transform cursor-pointer" />
+                        <div className="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500 hover:scale-110 transition-transform cursor-pointer" />
                       </div>
-                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Live Dashboard Preview
+                      <div className="ml-4 flex items-center gap-2 px-3 py-1.5 rounded-full 
+                                      bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/50 dark:border-gray-700/50">
+                        <Briefcase className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                          jobpath.ai/dashboard
+                        </span>
                       </div>
                     </div>
 
-                    {/* Mock Kanban Board */}
-                    <div className="space-y-4">
-                      {[
-                        { title: 'Applied', count: 12, color: 'bg-blue-500' },
-                        { title: 'Interview', count: 4, color: 'bg-yellow-500' },
-                        { title: 'Offer', count: 2, color: 'bg-green-500' },
-                        { title: 'Rejected', count: 6, color: 'bg-red-500' }
-                      ].map((column) => (
-                        <div key={column.title} className="flex items-center justify-between p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:translate-x-2 transition-transform duration-300">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-3 h-3 rounded-full ${column.color}`} />
-                            <span className="font-medium">{column.title}</span>
+                    <div className="text-sm font-semibold bg-gradient-to-r from-primary to-purple-600 
+                                    bg-clip-text text-transparent">
+                      Live Dashboard Preview
+                    </div>
+                  </div>
+
+                  {/* Modern Kanban-style preview */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                    {[
+                      {
+                        title: 'Applied',
+                        count: 12,
+                        color: 'from-blue-500 to-cyan-500',
+                        icon: '📬',
+                        trend: '+3 today'
+                      },
+                      {
+                        title: 'Interview',
+                        count: 4,
+                        color: 'from-yellow-500 to-orange-500',
+                        icon: '📅',
+                        trend: '+1 tomorrow'
+                      },
+                      {
+                        title: 'Offer',
+                        count: 2,
+                        color: 'from-green-500 to-emerald-500',
+                        icon: '🏆',
+                        trend: 'Pending'
+                      },
+                      {
+                        title: 'Rejected',
+                        count: 6,
+                        color: 'from-red-500 to-pink-500',
+                        icon: '📉',
+                        trend: '-2.5% rate'
+                      }
+                    ].map((column) => (
+                      <div
+                        key={column.title}
+                        className="group relative overflow-hidden rounded-2xl p-4 
+                                  bg-gradient-to-br from-white to-gray-50/50 
+                                  dark:from-gray-800/50 dark:to-gray-900/50
+                                  border border-gray-200/50 dark:border-gray-700/50
+                                  hover:shadow-lg hover:shadow-primary/10 dark:hover:shadow-primary/5
+                                  hover:border-primary/30 dark:hover:border-primary/40
+                                  transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                      >
+                        {/* Background gradient */}
+                        <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${column.color} 
+                                        group-hover:opacity-20 transition-opacity`} />
+
+                        <div className="relative z-10">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="text-2xl">{column.icon}</div>
+                            <div className={`text-xs font-semibold px-2 py-1 rounded-full 
+                                            bg-gradient-to-r ${column.color} text-white`}>
+                              {column.count}
+                            </div>
                           </div>
-                          <div className="px-3 py-1 rounded-full bg-white dark:bg-gray-900 text-sm font-bold">
-                            {column.count}
+
+                          <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-1">
+                            {column.title}
+                          </h3>
+
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            {column.trend}
+                          </p>
+
+                          {/* Progress bar */}
+                          <div className="mt-3 h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full bg-gradient-to-r ${column.color} rounded-full 
+                                        group-hover:animate-pulse`}
+                              style={{ width: `${(column.count / 24) * 100}%` }}
+                            />
                           </div>
                         </div>
-                      ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* AI Assistant Card - Modern chat bubble style */}
+                  <div className="relative overflow-hidden rounded-2xl 
+                                  bg-gradient-to-br from-primary/5 via-primary/10 to-purple-500/5 
+                                  dark:from-primary/10 dark:via-primary/15 dark:to-purple-500/10
+                                  border border-primary/20 dark:border-primary/30
+                                  p-5 group hover:shadow-lg hover:shadow-primary/20 dark:hover:shadow-primary/10
+                                  transition-all duration-300">
+
+                    {/* Animated background pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(120,119,198,0.3)_1px,transparent_0)] 
+                                      bg-[length:20px_20px]" />
                     </div>
 
-                    {/* AI Assistant Preview */}
-                    <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
+                    <div className="relative z-10">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-purple-500 flex items-center justify-center">
-                          <Sparkles className="h-4 w-4 text-white" />
+                        {/* Animated AI avatar */}
+                        <div className="relative">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-purple-600 
+                                        flex items-center justify-center shadow-lg">
+                            <Sparkles className="h-5 w-5 text-white animate-pulse" />
+                          </div>
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full 
+                                        animate-ping opacity-75" />
                         </div>
-                        <div className="font-medium">AI Assistant</div>
+
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-bold text-gray-800 dark:text-white">
+                              AI Assistant
+                            </h3>
+                            <span className="px-2 py-0.5 text-xs font-semibold rounded-full 
+                                            bg-gradient-to-r from-primary to-purple-600 text-white">
+                              LIVE
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            Powered by GPT-4 • Just now
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        "Your resume score increased by 32%! Ready to apply to 3 new matching jobs."
-                      </p>
+
+                      {/* Chat bubble */}
+                      <div className="ml-12 relative">
+                        <div className="absolute -left-2 top-3 w-4 h-4 bg-gradient-to-r from-primary/5 to-purple-500/5 
+                                      dark:from-primary/10 dark:to-purple-500/10 transform -rotate-45" />
+
+                        <div className="pl-4 pr-3 py-3 rounded-2xl rounded-tl-none 
+                                      bg-gradient-to-r from-white/80 to-white/90 
+                                      dark:from-gray-800/80 dark:to-gray-900/90
+                                      border border-gray-200/50 dark:border-gray-700/50">
+                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <span className="font-semibold text-primary dark:text-primary-light">
+                              🎉 Great news!
+                            </span>{' '}
+                            Your resume score increased by{' '}
+                            <span className="font-bold bg-gradient-to-r from-green-600 to-emerald-600 
+                                            bg-clip-text text-transparent">
+                              32%
+                            </span>
+                            . I found{' '}
+                            <span className="font-bold text-primary">3 new matching jobs</span>{' '}
+                            at companies you'll love. Ready to apply?
+                          </p>
+
+                          {/* Quick actions */}
+                          <div className="mt-3 flex gap-2">
+                            <button className="px-3 py-1.5 text-xs font-medium rounded-lg 
+                                            bg-gradient-to-r from-primary to-purple-600 
+                                            text-white hover:shadow-lg hover:shadow-primary/30 
+                                            transition-all duration-200 transform hover:scale-105">
+                              View Jobs
+                            </button>
+                            <button className="px-3 py-1.5 text-xs font-medium rounded-lg 
+                                            bg-white/80 dark:bg-gray-800/80 
+                                            border border-gray-300 dark:border-gray-700
+                                            text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800
+                                            transition-all duration-200">
+                              Analyze Resume
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floating elements for visual interest */}
+                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-r from-primary/20 to-purple-500/20 
+                                  rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                  </div>
+
+                  {/* Stats footer */}
+                  <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+                    <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                          <span>System Active</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 rounded-full bg-blue-500" />
+                          <span>24 Jobs Tracked</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-gray-700 dark:text-gray-300">
+                          Updated live
+                        </span>
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Floating elements around the card */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-r from-primary/20 to-purple-500/20 
+                                rounded-full blur-2xl animate-pulse-slow" />
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 
+                                rounded-full blur-2xl animate-pulse-slow delay-1000" />
               </div>
             </div>
           </div>
