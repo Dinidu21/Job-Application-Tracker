@@ -1,0 +1,101 @@
+---
+version: '3.8'
+
+services:
+  # Backend in production pulls from registry
+  backend:
+    image: ${DOCKER_USERNAME}/jobpath-backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      NODE_ENV: production
+    # Remove port exposure if using reverse proxy
+    # ports: []
+
+    # Frontend in production pulls from registry
+  frontend:
+    image: ${DOCKER_USERNAME}/jobpath-frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+        REACT_APP_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Remove port exposure if using reverse proxy
+    # ports: []
+
+    # MongoDB with persistent storage and backup-ready volumes
+  mongodb:
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      # Use named volumes for persistence
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+      # Add backup location
+      - /opt/mongodb/backup:/backup
+      # Expose port only if needed externally (usually not in production)
+      # ports: []
+    command: mongod --auth
+
+  # Optional: Add Nginx reverse proxy
+  nginx-proxy:
+    image: nginx:1.25-alpine
+    container_name: jobpath-nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - certbot_www:/var/www/certbot:ro
+      - certbot_conf:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - jobpath-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Certbot for SSL certificates
+  certbot:
+    image: certbot/certbot:latest
+    container_name: jobpath-certbot
+    volumes:
+      - certbot_www:/var/www/certbot:rw
+      - certbot_conf:/etc/letsencrypt:rw
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  certbot_www:
+    driver: local
+  certbot_conf:
+    driver: local
