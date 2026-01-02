@@ -4,6 +4,9 @@ export interface ISession extends Document {
   userId: mongoose.Types.ObjectId;
   loginTime: Date;
   expiresAt: Date;
+  lastSeenAt: Date;
+  ip?: string;
+  userAgent?: string;
 }
 
 const sessionSchema = new Schema<ISession>(
@@ -20,6 +23,16 @@ const sessionSchema = new Schema<ISession>(
     expiresAt: {
       type: Date,
       required: true,
+    },
+    lastSeenAt: {
+      type: Date,
+      default: Date.now,
+    },
+    ip: {
+      type: String,
+    },
+    userAgent: {
+      type: String,
     },
   },
   {

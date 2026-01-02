@@ -2,52 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axiosInstance from '../api/axiosInstance';
-
-interface ActiveSession {
-    user: {
-        _id: string;
-        name: string;
-        email: string;
-        role: string;
-        address?: string;
-        phone?: string;
-        currentRole?: string;
-        currentCompany?: string;
-        currentState?: string;
-        resume?: string;
-        profileImage?: string;
-        skills?: string;
-        experience?: string;
-        education?: string;
-        createdAt: string;
-        updatedAt: string;
-    };
-    loginTime: string;
-    expiresAt: string;
-}
-
-interface NewUser {
-    _id: string;
-    name: string;
-    email: string;
-    role: string;
-    address?: string;
-    phone?: string;
-    currentRole?: string;
-    currentCompany?: string;
-    currentState?: string;
-    resume?: string;
-    profileImage?: string;
-    skills?: string;
-    experience?: string;
-    education?: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui';
+import { Badge } from '../components/ui';
 
 const Admin: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
-    const [data, setData] = useState<{ activeSessions: ActiveSession[]; newUsers: NewUser[] } | null>(null);
+    const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -70,58 +30,72 @@ const Admin: React.FC = () => {
         }
     }, [user]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!data) return <div>No data</div>;
+    if (loading) return <div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>;
+    if (error) return <div className="flex items-center justify-center min-h-screen text-red-500">{error}</div>;
+    if (data.length === 0) return <div className="flex items-center justify-center min-h-screen">No data available</div>;
+
+    const monitoring = data[0];
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
-            <div className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">Active Sessions</h2>
-                <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 p-2">Name</th>
-                            <th className="border border-gray-300 p-2">Email</th>
-                            <th className="border border-gray-300 p-2">Login Time</th>
-                            <th className="border border-gray-300 p-2">Expires At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.activeSessions.map((session, index) => (
-                            <tr key={index}>
-                                <td className="border border-gray-300 p-2">{session.user.name}</td>
-                                <td className="border border-gray-300 p-2">{session.user.email}</td>
-                                <td className="border border-gray-300 p-2">{new Date(session.loginTime).toLocaleString()}</td>
-                                <td className="border border-gray-300 p-2">{new Date(session.expiresAt).toLocaleString()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div className="p-6 space-y-6 bg-background min-h-screen">
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+                <div className="flex items-center gap-4">
+                    <Badge variant="secondary">Active Users: {monitoring.activeUsersCount}</Badge>
+                    <Badge variant="outline">Window: {monitoring.activeWindowMinutes} min</Badge>
+                    <span className="text-sm text-muted-foreground">Generated: {new Date(monitoring.generatedAt).toLocaleString()}</span>
+                </div>
             </div>
-            <div>
-                <h2 className="text-xl font-semibold mb-4">Newly Registered Users (Last 7 days)</h2>
-                <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 p-2">Name</th>
-                            <th className="border border-gray-300 p-2">Email</th>
-                            <th className="border border-gray-300 p-2">Role</th>
-                            <th className="border border-gray-300 p-2">Registered At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.newUsers.map((user) => (
-                            <tr key={user._id}>
-                                <td className="border border-gray-300 p-2">{user.name}</td>
-                                <td className="border border-gray-300 p-2">{user.email}</td>
-                                <td className="border border-gray-300 p-2">{user.role}</td>
-                                <td className="border border-gray-300 p-2">{new Date(user.createdAt).toLocaleString()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+            <div className="grid gap-6">
+                {monitoring.activeUsers.map((activeUser: any, index: number) => (
+                    <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-200">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                {activeUser.user.name}
+                                <Badge variant={activeUser.user.role === 'admin' ? 'destructive' : 'default'}>
+                                    {activeUser.user.role}
+                                </Badge>
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">User</h4>
+                                    <p className="text-sm"><strong>Email:</strong> {activeUser.user.email}</p>
+                                    <p className="text-sm"><strong>Created:</strong> {new Date(activeUser.user.createdAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Last Login:</strong> {new Date(activeUser.user.lastLoginAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Last Seen:</strong> {new Date(activeUser.user.lastSeenAt).toLocaleString()}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Session</h4>
+                                    <p className="text-sm"><strong>Session ID:</strong> {activeUser.session.sessionId}</p>
+                                    <p className="text-sm"><strong>Login At:</strong> {new Date(activeUser.session.loginAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Last Seen:</strong> {new Date(activeUser.session.lastSeenAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Expires:</strong> {new Date(activeUser.session.expiresAt).toLocaleString()}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Network</h4>
+                                    <p className="text-sm"><strong>IP:</strong> {activeUser.network.ip}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Device</h4>
+                                    <p className="text-sm text-xs break-all"><strong>User Agent:</strong> {activeUser.device.userAgent}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Activity</h4>
+                                    <p className="text-sm"><strong>Last Endpoint:</strong> {activeUser.activity.lastEndpoint || 'N/A'}</p>
+                                    <p className="text-sm"><strong>Request Count:</strong> {activeUser.activity.requestCount}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Security</h4>
+                                    <p className="text-sm"><strong>Token Expires:</strong> {new Date(activeUser.security.tokenExpiresAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Suspicious:</strong> <Badge variant={activeUser.security.isSuspicious ? 'destructive' : 'secondary'}>{activeUser.security.isSuspicious ? 'Yes' : 'No'}</Badge></p>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
         </div>
     );

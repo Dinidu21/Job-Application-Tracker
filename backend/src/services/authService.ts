@@ -51,6 +51,9 @@ export const registerUser = async (data: RegisterDTO): Promise<AuthResponse> => 
 
   // Create user
   const user = await User.create({ name, email, password });
+  user.lastLoginAt = new Date();
+  user.lastSeenAt = new Date();
+  await user.save();
 
   // Generate token
   const token = generateToken({
@@ -136,6 +139,10 @@ export const loginUser = async (data: LoginDTO): Promise<AuthResponse> => {
     throw new Error('Invalid email or password');
   }
 
+  user.lastLoginAt = new Date();
+  user.lastSeenAt = new Date();
+  await user.save();
+
   // Generate token
   const token = generateToken({
     id: user._id.toString(),
@@ -177,6 +184,10 @@ export const googleAuth = async (data: GoogleAuthData): Promise<AuthResponse> =>
       });
     }
   }
+
+  user.lastLoginAt = new Date();
+  user.lastSeenAt = new Date();
+  await user.save();
 
   // Generate token
   const token = generateToken({

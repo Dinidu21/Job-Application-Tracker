@@ -17,6 +17,8 @@ export interface IUser extends Document {
   skills?: string;
   experience?: string;
   education?: string;
+  lastLoginAt?: Date;
+  lastSeenAt?: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -91,6 +93,12 @@ const userSchema = new Schema<IUser>(
     education: {
       type: String,
       trim: true,
+    },
+    lastLoginAt: {
+      type: Date,
+    },
+    lastSeenAt: {
+      type: Date,
     },
   },
   {
