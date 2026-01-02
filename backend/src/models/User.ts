@@ -19,6 +19,7 @@ export interface IUser extends Document {
   education?: string;
   lastLoginAt?: Date;
   lastSeenAt?: Date;
+  accountStatus?: 'active' | 'inactive' | 'suspended';
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -99,6 +100,11 @@ const userSchema = new Schema<IUser>(
     },
     lastSeenAt: {
       type: Date,
+    },
+    accountStatus: {
+      type: String,
+      enum: ['active', 'inactive', 'suspended'],
+      default: 'active',
     },
   },
   {

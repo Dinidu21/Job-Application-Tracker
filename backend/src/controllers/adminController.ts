@@ -8,14 +8,15 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
         // Fetch ALL sessions (remove expiresAt filter to include inactive/historical ones)
         const allSessions = await Session.find({}).populate('userId').lean();
 
-        const usersData = allSessions.map(s => {
+        const usersData = allSessions.filter(s => s.userId).map(s => {
             const user = s.userId as any;
             return {
                 user: {
                     id: user._id,
-                    email: user.email,
                     name: user.name,
+                    email: user.email,
                     role: user.role,
+                    accountStatus: user.accountStatus || 'active',
                     createdAt: user.createdAt,
                     lastLoginAt: user.lastLoginAt,
                     lastSeenAt: user.lastSeenAt,
@@ -25,20 +26,21 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
                     loginAt: s.loginTime,
                     lastSeenAt: s.lastSeenAt,
                     expiresAt: s.expiresAt,
-                },
-                network: {
-                    ip: s.ip,
-                },
-                device: {
+                    deviceType: s.deviceType,
                     userAgent: s.userAgent,
+                    IP: s.ip,
+                    geo: s.geo,
                 },
                 activity: {
                     lastEndpoint: null,
                     requestCount: 0,
+                    averageRequestsPerMinute: 0,
+                    pagesVisited: [],
                 },
                 security: {
                     tokenExpiresAt: s.expiresAt,
                     isSuspicious: false,
+                    flags: [],
                 },
             };
         });

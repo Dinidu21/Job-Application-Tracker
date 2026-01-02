@@ -7,6 +7,11 @@ export interface ISession extends Document {
   lastSeenAt: Date;
   ip?: string;
   userAgent?: string;
+  deviceType?: string;
+  geo?: {
+    country: string;
+    city: string;
+  };
 }
 
 const sessionSchema = new Schema<ISession>(
@@ -33,6 +38,13 @@ const sessionSchema = new Schema<ISession>(
     },
     userAgent: {
       type: String,
+    },
+    deviceType: {
+      type: String,
+    },
+    geo: {
+      country: String,
+      city: String,
     },
   },
   {

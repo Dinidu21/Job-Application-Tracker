@@ -4,15 +4,22 @@ import { RootState } from '../store/store';
 import axiosInstance from '../api/axiosInstance';
 import { Card, CardContent, CardHeader, CardTitle, Button } from '../components/ui';
 import { Badge } from '../components/ui';
+import { Monitor, Smartphone, Globe, Shield, Activity, User, Clock, MapPin } from 'lucide-react';
 
 interface UserInfo {
     id: string;
-    email: string;
     name: string;
+    email: string;
     role: string;
+    accountStatus: string;
     createdAt: string;
     lastLoginAt: string;
     lastSeenAt: string;
+}
+
+interface GeoInfo {
+    country: string;
+    city: string;
 }
 
 interface SessionInfo {
@@ -20,31 +27,28 @@ interface SessionInfo {
     loginAt: string;
     lastSeenAt: string;
     expiresAt: string;
-}
-
-interface NetworkInfo {
-    ip: string;
-}
-
-interface DeviceInfo {
+    deviceType: string;
     userAgent: string;
+    IP: string;
+    geo: GeoInfo;
 }
 
 interface ActivityInfo {
     lastEndpoint: string | null;
     requestCount: number;
+    averageRequestsPerMinute: number;
+    pagesVisited: string[];
 }
 
 interface SecurityInfo {
     tokenExpiresAt: string;
     isSuspicious: boolean;
+    flags: string[];
 }
 
 interface ActiveUser {
     user: UserInfo;
     session: SessionInfo;
-    network: NetworkInfo;
-    device: DeviceInfo;
     activity: ActivityInfo;
     security: SecurityInfo;
 }
@@ -118,52 +122,62 @@ const Admin: React.FC = () => {
             <div className="grid gap-6">
                 {monitoring.activeUsers.map((activeUser: ActiveUser, index: number) => (
                     <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-200">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="flex items-center gap-2">
-                            {activeUser.user.name}
-                            <Badge variant={activeUser.user.role === 'admin' ? 'destructive' : 'default'}>
-                              {activeUser.user.role}
-                            </Badge>
-                          </CardTitle>
-                          <Button variant="destructive" size="sm" onClick={() => handleDelete(activeUser.session.sessionId)}>
-                            Delete Session
-                          </Button>
-                        </div>
-                      </CardHeader>
+                        <CardHeader>
+                            <div className="flex items-center justify-between">
+                                <CardTitle className="flex items-center gap-2">
+                                    {activeUser.user.name}
+                                    <Badge variant={activeUser.user.role === 'admin' ? 'destructive' : 'default'}>
+                                        {activeUser.user.role}
+                                    </Badge>
+                                </CardTitle>
+                                <Button variant="destructive" size="sm" onClick={() => handleDelete(activeUser.session.sessionId)}>
+                                    Delete Session
+                                </Button>
+                            </div>
+                        </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">User</h4>
+                                    <div className="flex items-center gap-2">
+                                        <User className="h-4 w-4" />
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">User</h4>
+                                    </div>
+                                    <p className="text-sm"><strong>Name:</strong> {activeUser.user.name}</p>
                                     <p className="text-sm"><strong>Email:</strong> {activeUser.user.email}</p>
+                                    <p className="text-sm"><strong>Status:</strong> <Badge variant={activeUser.user.accountStatus === 'active' ? 'default' : 'secondary'}>{activeUser.user.accountStatus}</Badge></p>
                                     <p className="text-sm"><strong>Created:</strong> {new Date(activeUser.user.createdAt).toLocaleString()}</p>
                                     <p className="text-sm"><strong>Last Login:</strong> {activeUser.user.lastLoginAt ? new Date(activeUser.user.lastLoginAt).toLocaleString() : 'Never'}</p>
                                     <p className="text-sm"><strong>Last Seen:</strong> {activeUser.user.lastSeenAt ? new Date(activeUser.user.lastSeenAt).toLocaleString() : 'Never'}</p>
                                 </div>
                                 <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Session</h4>
-                                    <p className="text-sm"><strong>Session ID:</strong> {activeUser.session.sessionId}</p>
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="h-4 w-4" />
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Session</h4>
+                                    </div>
+                                    <p className="text-sm"><strong>Device:</strong> <span className="flex items-center gap-1">{activeUser.session.deviceType === 'mobile' ? <Smartphone className="h-3 w-3" /> : <Monitor className="h-3 w-3" />} {activeUser.session.deviceType}</span></p>
+                                    <p className="text-sm"><strong>IP:</strong> {activeUser.session.IP}</p>
+                                    <p className="text-sm"><strong>Location:</strong> <span className="flex items-center gap-1"><Globe className="h-3 w-3" /> {activeUser.session.geo.city}, {activeUser.session.geo.country}</span></p>
                                     <p className="text-sm"><strong>Login At:</strong> {new Date(activeUser.session.loginAt).toLocaleString()}</p>
-                                    <p className="text-sm"><strong>Last Seen:</strong> {new Date(activeUser.session.lastSeenAt).toLocaleString()}</p>
                                     <p className="text-sm"><strong>Expires:</strong> {new Date(activeUser.session.expiresAt).toLocaleString()}</p>
                                 </div>
                                 <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Network</h4>
-                                    <p className="text-sm"><strong>IP:</strong> {activeUser.network.ip}</p>
-                                </div>
-                                <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Device</h4>
-                                    <p className="text-sm text-xs break-all"><strong>User Agent:</strong> {activeUser.device.userAgent}</p>
-                                </div>
-                                <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Activity</h4>
+                                    <div className="flex items-center gap-2">
+                                        <Activity className="h-4 w-4" />
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Activity</h4>
+                                    </div>
                                     <p className="text-sm"><strong>Last Endpoint:</strong> {activeUser.activity.lastEndpoint || 'N/A'}</p>
                                     <p className="text-sm"><strong>Request Count:</strong> {activeUser.activity.requestCount}</p>
+                                    <p className="text-sm"><strong>Avg Req/Min:</strong> {activeUser.activity.averageRequestsPerMinute}</p>
+                                    <p className="text-sm"><strong>Pages Visited:</strong> {activeUser.activity.pagesVisited.length > 0 ? activeUser.activity.pagesVisited.join(', ') : 'None'}</p>
                                 </div>
                                 <div className="space-y-2">
-                                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Security</h4>
+                                    <div className="flex items-center gap-2">
+                                        <Shield className="h-4 w-4" />
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Security</h4>
+                                    </div>
                                     <p className="text-sm"><strong>Token Expires:</strong> {new Date(activeUser.security.tokenExpiresAt).toLocaleString()}</p>
                                     <p className="text-sm"><strong>Suspicious:</strong> <Badge variant={activeUser.security.isSuspicious ? 'destructive' : 'secondary'}>{activeUser.security.isSuspicious ? 'Yes' : 'No'}</Badge></p>
+                                    <p className="text-sm"><strong>Flags:</strong> {activeUser.security.flags.length > 0 ? activeUser.security.flags.join(', ') : 'None'}</p>
                                 </div>
                             </div>
                         </CardContent>
@@ -181,3 +195,4 @@ const Admin: React.FC = () => {
 };
 
 export default Admin;
+
