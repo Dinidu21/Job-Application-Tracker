@@ -93,9 +93,9 @@ const Admin: React.FC = () => {
     return (
         <div className="p-6 space-y-6 bg-background min-h-screen">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+                <h1 className="text-3xl font-bold text-foreground">Admin Dashboard - All Users & Sessions</h1>
                 <div className="flex items-center gap-4">
-                    <Badge variant="secondary">Active Users: {monitoring.activeUsersCount}</Badge>
+                    <Badge variant="secondary">Users/Sessions: {monitoring.activeUsersCount}</Badge>
                     <Badge variant="outline">Window: {monitoring.activeWindowMinutes} min</Badge>
                     <span className="text-sm text-muted-foreground">Generated: {new Date(monitoring.generatedAt).toLocaleString()}</span>
                     <Button variant="outline" onClick={fetchData} disabled={loading}>
@@ -153,15 +153,15 @@ const Admin: React.FC = () => {
                         </CardContent>
                     </Card>
                 ))}
-              </div>
-        
-              {monitoring.activeUsers.length === 0 && (
-                <div className="text-center py-8 text-muted-foreground">
-                  No active users currently. Active sessions expire after 7 days.
-                </div>
-              )}
             </div>
-          );
-        };
+
+            {monitoring.activeUsers.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                    No users or sessions found !!
+                </div>
+            )}
+        </div>
+    );
+};
 
 export default Admin;
