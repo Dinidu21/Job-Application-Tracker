@@ -53,3 +53,13 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
         res.status(500).json({ message: error.message });
     }
 };
+
+export const deleteSession = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const { sessionId } = req.params;
+        await Session.findByIdAndDelete(sessionId);
+        res.status(200).json({ message: 'Session deleted successfully' });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};

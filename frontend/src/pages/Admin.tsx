@@ -75,6 +75,17 @@ const Admin: React.FC = () => {
         }
     };
 
+    const handleDelete = async (sessionId: string) => {
+        if (confirm('Are you sure you want to delete this session?')) {
+            try {
+                await axiosInstance.delete(`/admin/monitoring/${sessionId}`);
+                fetchData(); // Refresh data after deletion
+            } catch (err: any) {
+                alert('Failed to delete session: ' + (err.response?.data?.message || 'Unknown error'));
+            }
+        }
+    };
+
     useEffect(() => {
         if (user?.role === 'admin') {
             fetchData();
@@ -107,14 +118,19 @@ const Admin: React.FC = () => {
             <div className="grid gap-6">
                 {monitoring.activeUsers.map((activeUser: ActiveUser, index: number) => (
                     <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                {activeUser.user.name}
-                                <Badge variant={activeUser.user.role === 'admin' ? 'destructive' : 'default'}>
-                                    {activeUser.user.role}
-                                </Badge>
-                            </CardTitle>
-                        </CardHeader>
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="flex items-center gap-2">
+                            {activeUser.user.name}
+                            <Badge variant={activeUser.user.role === 'admin' ? 'destructive' : 'default'}>
+                              {activeUser.user.role}
+                            </Badge>
+                          </CardTitle>
+                          <Button variant="destructive" size="sm" onClick={() => handleDelete(activeUser.session.sessionId)}>
+                            Delete Session
+                          </Button>
+                        </div>
+                      </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <div className="space-y-2">
