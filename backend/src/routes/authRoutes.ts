@@ -106,7 +106,7 @@ router.get(
   (req: any, res: any) => {
     // Create session
     Session.create({
-      userId: req.user._id,
+      userId: req.user.user._id,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       ip: req.ip,
       userAgent: req.get('User-Agent'),
