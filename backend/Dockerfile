@@ -14,7 +14,7 @@ COPY package*.json ./
 # Install production dependencies only
 # --omit=dev skips devDependencies
 # --ignore-scripts prevents running potentially malicious scripts
-RUN npm ci --only=production --ignore-scripts && \
+RUN npm ci --omit=dev --ignore-scripts && \
     npm cache clean --force
 
 # Stage 2: Build TypeScript
