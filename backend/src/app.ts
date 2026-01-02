@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes';
 import applicationRoutes from './routes/applicationRoutes';
 import aiRoutes from './routes/aiRoutes';
 import pdfRoutes from './routes/pdfRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/pdf', pdfRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
