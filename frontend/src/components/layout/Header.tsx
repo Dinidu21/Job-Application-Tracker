@@ -12,7 +12,6 @@ import {
   Sun,
   Moon,
   Menu,
-  Monitor,
 } from 'lucide-react';
 import { Button } from '../ui';
 import { motion } from 'framer-motion';
