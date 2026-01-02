@@ -56,17 +56,15 @@ ENV NODE_ENV=production
 
 # Copy production dependencies from dependencies stage
 COPY --chown=nodejs:nodejs --from=dependencies /app/node_modules ./node_modules
-
-# Copy built JavaScript from builder stage
 COPY --chown=nodejs:nodejs --from=builder /app/dist ./dist
-
-# Copy package.json for any runtime needs
 COPY --chown=nodejs:nodejs --from=builder /app/package*.json ./
 
-# Switch to non-root user
+# Pre-create uploads folder and give correct permissions
+RUN mkdir -p /app/uploads && chown -R nodejs:nodejs /app/uploads
+
 USER nodejs
 
-# Expose port (should match your PORT env variable)
+# Expose port
 EXPOSE 5000
 
 # Health check
