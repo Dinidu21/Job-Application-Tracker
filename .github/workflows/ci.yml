@@ -99,9 +99,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
-            REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          # build-args: |
+          #   REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
+          #   REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
           cache-from: type=registry,ref=${{ env.FRONTEND_IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.FRONTEND_IMAGE_NAME }}:buildcache,mode=max
           platforms: linux/amd64,linux/arm64
