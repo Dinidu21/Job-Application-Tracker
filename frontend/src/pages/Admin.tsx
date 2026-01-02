@@ -154,8 +154,8 @@ const Admin: React.FC = () => {
             return (
                 activeUser.user.name.toLowerCase().includes(query) ||
                 activeUser.user.email.toLowerCase().includes(query) ||
-                activeUser.session.IP.includes(query) ||
-                activeUser.session.geo.city.toLowerCase().includes(query)
+                (activeUser.session.IP || '').includes(query) ||
+                (activeUser.session.geo?.city || '').toLowerCase().includes(query)
             );
         }
         return true;
@@ -420,7 +420,7 @@ const Admin: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground">Location</p>
-                                            <p className="font-medium">{activeUser.session.geo.city}</p>
+                                            <p className="font-medium">{activeUser.session.geo?.city || 'Unknown'}</p>
                                         </div>
                                     </div>
 
