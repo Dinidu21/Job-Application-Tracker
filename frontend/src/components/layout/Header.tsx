@@ -1,8 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { useTheme } from '../../contexts/ThemeContext';
+import { logout } from '../../store/authSlice';
 import {
   Bell,
   Search,
@@ -24,6 +25,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { theme, setTheme, actualTheme } = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const notifications = [
     { id: 1, title: 'New application response', time: '2m ago', unread: true },
@@ -221,7 +224,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
 
               <div className="border-t border-white/10 my-2" />
 
-              <Button variant="ghost" className="w-full justify-start gap-3 text-red-500 hover:text-red-400 hover:bg-red-500/10">
+              <Button variant="ghost" className="w-full justify-start gap-3 text-red-500 hover:text-red-400 hover:bg-red-500/10" onClick={() => { dispatch(logout()); navigate('/login'); }}>
                 <LogOut className="h-4 w-4" />
                 Sign out
               </Button>
