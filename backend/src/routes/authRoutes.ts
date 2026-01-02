@@ -6,6 +6,7 @@ import { body } from 'express-validator';
 import { register, login, getMe, googleAuth, updateProfile } from '../controllers/authController';
 import { protect } from '../middleware/authMiddleware';
 import passport from '../config/passport';
+import Session from '../models/Session';
 
 const router = express.Router();
 
@@ -103,6 +104,14 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req: any, res: any) => {
+    // Create session
+    Session.create({
+      userId: req.user._id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      ip: req.ip,
+      userAgent: req.get('User-Agent'),
+    }).catch(err => console.error('Session creation failed', err));
+
     // Redirect to frontend with token
     const token = req.user.token;
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?token=${token}`);
