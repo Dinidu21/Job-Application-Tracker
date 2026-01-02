@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axiosInstance from '../api/axiosInstance';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button } from '../components/ui';
 import { Badge } from '../components/ui';
 
 interface UserInfo {
@@ -62,17 +62,20 @@ const Admin: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const fetchData = async () => {
+        setLoading(true);
+        setError('');
+        try {
+            const response = await axiosInstance.get('/admin/monitoring');
+            setData(response.data);
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to fetch data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get('/admin/monitoring');
-                setData(response.data);
-            } catch (err: any) {
-                setError(err.response?.data?.message || 'Failed to fetch data');
-            } finally {
-                setLoading(false);
-            }
-        };
         if (user?.role === 'admin') {
             fetchData();
         } else {
@@ -95,6 +98,9 @@ const Admin: React.FC = () => {
                     <Badge variant="secondary">Active Users: {monitoring.activeUsersCount}</Badge>
                     <Badge variant="outline">Window: {monitoring.activeWindowMinutes} min</Badge>
                     <span className="text-sm text-muted-foreground">Generated: {new Date(monitoring.generatedAt).toLocaleString()}</span>
+                    <Button variant="outline" onClick={fetchData} disabled={loading}>
+                        {loading ? 'Refreshing...' : 'Refresh'}
+                    </Button>
                 </div>
             </div>
 
@@ -147,9 +153,15 @@ const Admin: React.FC = () => {
                         </CardContent>
                     </Card>
                 ))}
+              </div>
+        
+              {monitoring.activeUsers.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                  No active users currently. Active sessions expire after 7 days.
+                </div>
+              )}
             </div>
-        </div>
-    );
-};
+          );
+        };
 
 export default Admin;
