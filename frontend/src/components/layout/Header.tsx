@@ -223,10 +223,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
               </Link>
 
               {user?.role === 'admin' && (
+                console.log('Rendering admin link'),
                 <Link to="/admin">
                   <Button variant="ghost" className="w-full justify-start gap-3">
                     <Settings className="h-4 w-4" />
-                    Admin
+                    Monitor
                   </Button>
                 </Link>
               )}
