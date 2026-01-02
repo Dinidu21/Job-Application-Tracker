@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'http://localhost:5000';
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-  // Don't set default Content-Type to allow automatic detection for FormData
+  baseURL: `${API_BASE}/api`,
 });
 
 // Request interceptor to add token

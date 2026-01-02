@@ -6,6 +6,7 @@ import { login } from '../store/authSlice';
 import { Briefcase, Mail, Lock, ArrowLeft } from 'lucide-react';
 import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui';
 import ThemeToggle from '../components/ThemeToggle';
+import { GOOGLE_AUTH_URL } from '../config';
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -139,7 +140,7 @@ const Login = () => {
                 type="button"
                 variant="outline"
                 fullWidth
-                onClick={() => window.location.href = '/api/auth/google'}
+                onClick={() => window.location.href = GOOGLE_AUTH_URL}
                 className="flex items-center justify-center gap-2"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24">
