@@ -121,8 +121,8 @@ const Admin: React.FC = () => {
                                     <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">User</h4>
                                     <p className="text-sm"><strong>Email:</strong> {activeUser.user.email}</p>
                                     <p className="text-sm"><strong>Created:</strong> {new Date(activeUser.user.createdAt).toLocaleString()}</p>
-                                    <p className="text-sm"><strong>Last Login:</strong> {new Date(activeUser.user.lastLoginAt).toLocaleString()}</p>
-                                    <p className="text-sm"><strong>Last Seen:</strong> {new Date(activeUser.user.lastSeenAt).toLocaleString()}</p>
+                                    <p className="text-sm"><strong>Last Login:</strong> {activeUser.user.lastLoginAt ? new Date(activeUser.user.lastLoginAt).toLocaleString() : 'Never'}</p>
+                                    <p className="text-sm"><strong>Last Seen:</strong> {activeUser.user.lastSeenAt ? new Date(activeUser.user.lastSeenAt).toLocaleString() : 'Never'}</p>
                                 </div>
                                 <div className="space-y-2">
                                     <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">Session</h4>
