@@ -12,32 +12,32 @@ import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
-router.use(protect);
+router.use(protect as any);
 
-router.get('/stats', getStats);
+router.get('/stats', getStats as any);
 
 router
   .route('/')
-  .get(getApplications)
+  .get(getApplications as any)
   .post(
     [
       body('company').trim().notEmpty().withMessage('Company is required'),
       body('position').trim().notEmpty().withMessage('Position is required'),
       body('status').optional().isIn(['applied', 'interview', 'offer', 'rejected', 'withdrawn']),
     ],
-    createApplication
+    createApplication as any
   );
 
 router
   .route('/:id')
-  .get(getApplication)
+  .get(getApplication as any)
   .put(
     [
       body('status').optional().isIn(['applied', 'interview', 'offer', 'rejected', 'withdrawn']),
     ],
-    updateApplication
+    updateApplication as any
   )
-  .delete(deleteApplication);
+  .delete(deleteApplication as any);
 
 export default router;
 

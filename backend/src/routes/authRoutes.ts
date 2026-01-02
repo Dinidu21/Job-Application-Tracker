@@ -60,7 +60,7 @@ router.post(
     body('email').isEmail().withMessage('Please provide a valid email'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   ],
-  register
+  register as any
 );
 
 router.post(
@@ -69,14 +69,14 @@ router.post(
     body('email').isEmail().withMessage('Please provide a valid email'),
     body('password').notEmpty().withMessage('Password is required'),
   ],
-  login
+  login as any
 );
 
-router.get('/me', protect, getMe);
+router.get('/me', protect as any, getMe as any);
 
 router.put(
   '/profile',
-  protect,
+  protect as any,
   upload.fields([
     { name: 'resume', maxCount: 1 },
     { name: 'profileImage', maxCount: 1 }
@@ -85,15 +85,15 @@ router.put(
     body('name').optional().trim().notEmpty().withMessage('Name cannot be empty'),
     body('email').optional().isEmail().withMessage('Please provide a valid email'),
   ],
-  updateProfile
+  updateProfile as any
 );
 
 // Alternative route for testing - single file upload
 router.put(
   '/profile/single',
-  protect,
+  protect as any,
   upload.single('file'),
-  updateProfile
+  updateProfile as any
 );
 
 // Google OAuth routes
@@ -117,7 +117,7 @@ router.post(
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Valid email is required'),
   ],
-  googleAuth
+  googleAuth as any
 );
 
 export default router;
