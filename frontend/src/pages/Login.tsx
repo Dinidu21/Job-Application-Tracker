@@ -139,7 +139,7 @@ const Login = () => {
                 type="button"
                 variant="outline"
                 fullWidth
-                onClick={() => window.location.href = '/api/auth/google'}
+                onClick={() => window.location.href = 'https://job-application-tracker-production-f5ac.up.railway.app/api/auth/google'}
                 className="flex items-center justify-center gap-2"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24">

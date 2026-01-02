@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://job-application-tracker-production-f5ac.up.railway.app/api',
   // Don't set default Content-Type to allow automatic detection for FormData
 });
 
