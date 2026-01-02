@@ -16,6 +16,7 @@ const Applications = lazy(() => import('./pages/Applications'));
 const ApplicationForm = lazy(() => import('./pages/ApplicationForm'));
 const ApplicationDetails = lazy(() => import('./pages/ApplicationDetails'));
 const Profile = lazy(() => import('./pages/Profile'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 const LoadingFallback = () => (
   <div className="flex min-h-screen items-center justify-center">
@@ -98,6 +99,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
               </ProtectedRoute>
             }
           />

@@ -222,6 +222,15 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, className }) => {
                 </Button>
               </Link>
 
+              {user?.role === 'admin' && (
+                <Link to="/admin">
+                  <Button variant="ghost" className="w-full justify-start gap-3">
+                    <Settings className="h-4 w-4" />
+                    Admin
+                  </Button>
+                </Link>
+              )}
+
               <div className="border-t border-white/10 my-2" />
 
               <Button variant="ghost" className="w-full justify-start gap-3 text-red-500 hover:text-red-400 hover:bg-red-500/10" onClick={() => { dispatch(logout()); navigate('/login'); }}>
