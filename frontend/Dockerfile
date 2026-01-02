@@ -48,7 +48,7 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy built assets from builder stage
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Security: Set proper permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
