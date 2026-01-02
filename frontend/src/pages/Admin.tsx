@@ -5,9 +5,60 @@ import axiosInstance from '../api/axiosInstance';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui';
 import { Badge } from '../components/ui';
 
+interface UserInfo {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    createdAt: string;
+    lastLoginAt: string;
+    lastSeenAt: string;
+}
+
+interface SessionInfo {
+    sessionId: string;
+    loginAt: string;
+    lastSeenAt: string;
+    expiresAt: string;
+}
+
+interface NetworkInfo {
+    ip: string;
+}
+
+interface DeviceInfo {
+    userAgent: string;
+}
+
+interface ActivityInfo {
+    lastEndpoint: string | null;
+    requestCount: number;
+}
+
+interface SecurityInfo {
+    tokenExpiresAt: string;
+    isSuspicious: boolean;
+}
+
+interface ActiveUser {
+    user: UserInfo;
+    session: SessionInfo;
+    network: NetworkInfo;
+    device: DeviceInfo;
+    activity: ActivityInfo;
+    security: SecurityInfo;
+}
+
+interface MonitoringData {
+    activeWindowMinutes: number;
+    generatedAt: string;
+    activeUsersCount: number;
+    activeUsers: ActiveUser[];
+}
+
 const Admin: React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth);
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<MonitoringData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -48,7 +99,7 @@ const Admin: React.FC = () => {
             </div>
 
             <div className="grid gap-6">
-                {monitoring.activeUsers.map((activeUser: any, index: number) => (
+                {monitoring.activeUsers.map((activeUser: ActiveUser, index: number) => (
                     <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-200">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
