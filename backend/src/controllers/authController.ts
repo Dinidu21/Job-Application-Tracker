@@ -14,12 +14,12 @@ export const register = async (req: AuthRequest, res: Response): Promise<void> =
 
     const result = await authService.registerUser(req.body);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    await Session.create({
+    Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent: req.get('User-Agent'),
-    });
+    }).catch(err => console.error('Session creation failed', err));
     res.status(201).json(result);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
@@ -36,12 +36,12 @@ export const login = async (req: AuthRequest, res: Response): Promise<void> => {
 
     const result = await authService.loginUser(req.body);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    await Session.create({
+    Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent: req.get('User-Agent'),
-    });
+    }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {
     res.status(401).json({ message: error.message });
@@ -63,12 +63,12 @@ export const googleAuth = async (req: AuthRequest, res: Response): Promise<void>
     const { googleId, name, email } = req.body;
     const result = await authService.googleAuth({ googleId, name, email });
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    await Session.create({
+    Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent: req.get('User-Agent'),
-    });
+    }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
