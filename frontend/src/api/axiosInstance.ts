@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://job-application-tracker-production-f5ac.up.railway.app/api',
+  baseURL: '/api',
   // Don't set default Content-Type to allow automatic detection for FormData
 });
 
@@ -33,4 +33,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
-
