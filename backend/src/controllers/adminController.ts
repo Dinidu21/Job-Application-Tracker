@@ -44,7 +44,7 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
                     device_Vendor: device.vendor || '',
                     device_Model: device.model || '',
                     IP: s.ip,
-                    geo: s.geo, // Pass the full object
+                    geo: s.geo,
                 },
                 activity: {
                     lastEndpoint: null,

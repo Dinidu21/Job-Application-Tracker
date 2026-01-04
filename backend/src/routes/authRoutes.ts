@@ -103,42 +103,13 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
-  async (req: any, res: any) => {
-    // Helper to fetch IP info (duplicate for now, or could be moved to utils)
-    const fetchIpInfo = async (ip: string) => {
-      if (ip === '::1' || ip === '127.0.0.1' || ip.startsWith('192.168.')) return { country: 'Localhost', city: 'Local' };
-      try {
-        const response = await fetch(`http://ip-api.com/json/${ip}`);
-        const data = await response.json() as any;
-        if (data.status === 'success') {
-          return {
-            country: data.country,
-            city: data.city,
-            region: data.region,
-            regionName: data.regionName,
-            zip: data.zip,
-            lat: data.lat,
-            lon: data.lon,
-            timezone: data.timezone,
-            isp: data.isp,
-            org: data.org,
-            as: data.as,
-            query: data.query
-          };
-        }
-      } catch (e) { console.error(e); }
-      return { country: 'Unknown', city: 'Unknown' };
-    };
-
-    const geo = await fetchIpInfo(req.ip || '127.0.0.1');
-
+  (req: any, res: any) => {
     // Create session
     Session.create({
       userId: req.user.user._id,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       ip: req.ip,
       userAgent: req.get('User-Agent'),
-      geo,
     }).catch(err => console.error('Session creation failed', err));
 
     // Redirect to frontend with token

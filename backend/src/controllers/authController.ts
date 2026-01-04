@@ -4,51 +4,6 @@ import * as authService from '../services/authService';
 import { validationResult } from 'express-validator';
 import Session from '../models/Session';
 
-// Helper to fetch IP info
-const fetchIpInfo = async (ip: string) => {
-  // Skip local IPs or use a default
-  if (ip === '::1' || ip === '127.0.0.1' || ip.startsWith('192.168.')) {
-    return {
-      country: 'Localhost',
-      city: 'Local Network',
-      region: 'Local',
-      regionName: 'Local',
-      zip: '00000',
-      lat: 0,
-      lon: 0,
-      timezone: 'UTC',
-      isp: 'Local ISP',
-      org: 'Local Org',
-      as: 'AS0000 Local',
-      query: ip
-    };
-  }
-
-  try {
-    const response = await fetch(`http://ip-api.com/json/${ip}`);
-    const data = await response.json() as any;
-    if (data.status === 'success') {
-      return {
-        country: data.country,
-        city: data.city,
-        region: data.region,
-        regionName: data.regionName,
-        zip: data.zip,
-        lat: data.lat,
-        lon: data.lon,
-        timezone: data.timezone,
-        isp: data.isp,
-        org: data.org,
-        as: data.as,
-        query: data.query
-      };
-    }
-  } catch (error) {
-    console.error('IP fetch failed:', error);
-  }
-  return { country: 'Unknown', city: 'Unknown' };
-};
-
 export const register = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const errors = validationResult(req);
@@ -61,17 +16,13 @@ export const register = async (req: AuthRequest, res: Response): Promise<void> =
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const userAgent = req.get('User-Agent') || '';
     const deviceType = userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone') ? 'mobile' : 'desktop';
-
-    // Fetch Geo Info
-    const geo = await fetchIpInfo(req.ip || '127.0.0.1');
-
     Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent,
       deviceType,
-      geo,
+      geo: { country: 'Unknown', city: 'Unknown' },
     }).catch(err => console.error('Session creation failed', err));
     res.status(201).json(result);
   } catch (error: any) {
@@ -91,17 +42,13 @@ export const login = async (req: AuthRequest, res: Response): Promise<void> => {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const userAgent = req.get('User-Agent') || '';
     const deviceType = userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone') ? 'mobile' : 'desktop';
-
-    // Fetch Geo Info
-    const geo = await fetchIpInfo(req.ip || '127.0.0.1');
-
     Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent,
       deviceType,
-      geo,
+      geo: { country: 'Unknown', city: 'Unknown' },
     }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {
@@ -124,16 +71,11 @@ export const googleAuth = async (req: AuthRequest, res: Response): Promise<void>
     const { googleId, name, email } = req.body;
     const result = await authService.googleAuth({ googleId, name, email });
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-    // Fetch Geo Info
-    const geo = await fetchIpInfo(req.ip || '127.0.0.1');
-
     Session.create({
       userId: result.user.id,
       expiresAt,
       ip: req.ip,
       userAgent: req.get('User-Agent'),
-      geo,
     }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {

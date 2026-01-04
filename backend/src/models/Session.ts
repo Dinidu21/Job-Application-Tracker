@@ -11,16 +11,6 @@ export interface ISession extends Document {
   geo?: {
     country: string;
     city: string;
-    region?: string;
-    regionName?: string;
-    zip?: string;
-    lat?: number;
-    lon?: number;
-    timezone?: string;
-    isp?: string;
-    org?: string;
-    as?: string;
-    query?: string;
   };
 }
 
@@ -55,16 +45,6 @@ const sessionSchema = new Schema<ISession>(
     geo: {
       country: String,
       city: String,
-      region: String,
-      regionName: String,
-      zip: String,
-      lat: Number,
-      lon: Number,
-      timezone: String,
-      isp: String,
-      org: String,
-      as: String,
-      query: String,
     },
   },
   {
