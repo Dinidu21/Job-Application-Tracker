@@ -17,6 +17,7 @@ const ApplicationForm = lazy(() => import('./pages/ApplicationForm'));
 const ApplicationDetails = lazy(() => import('./pages/ApplicationDetails'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Admin = lazy(() => import('./pages/Admin'));
+const SessionJsonView = lazy(() => import('./pages/SessionJsonView'));
 
 const LoadingFallback = () => (
   <div className="flex min-h-screen items-center justify-center">
@@ -107,6 +108,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/monitoring/:sessionId"
+            element={
+              <ProtectedRoute>
+                <SessionJsonView />
               </ProtectedRoute>
             }
           />

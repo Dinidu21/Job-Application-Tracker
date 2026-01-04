@@ -22,8 +22,11 @@ import {
     Cpu,
     Network,
     HardDrive,
-    Users
+    Users,
+    Download,
+    FileJson
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface UserInfo {
     id: string;
@@ -107,6 +110,8 @@ const Admin: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [expandedCard, setExpandedCard] = useState<string | null>(null);
+    const [openMenuSessionId, setOpenMenuSessionId] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         setLoading(true);
@@ -135,6 +140,36 @@ const Admin: React.FC = () => {
     const toggleCardExpand = (sessionId: string) => {
         setExpandedCard(expandedCard === sessionId ? null : sessionId);
     };
+
+    const toggleMenu = (sessionId: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setOpenMenuSessionId(openMenuSessionId === sessionId ? null : sessionId);
+    };
+
+    const handleDownloadJson = (activeUser: ActiveUser) => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(activeUser, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `session-${activeUser.session.sessionId}.json`);
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+        setOpenMenuSessionId(null);
+    };
+
+    const handleViewJson = (activeUser: ActiveUser) => {
+        navigate(`/admin/monitoring/${activeUser.session.sessionId}`, {
+            state: { sessionData: activeUser }
+        });
+        setOpenMenuSessionId(null);
+    };
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = () => setOpenMenuSessionId(null);
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
 
     useEffect(() => {
         if (user?.role === 'admin') {
@@ -414,8 +449,37 @@ const Admin: React.FC = () => {
                                         >
                                             <Trash2 className="h-4 w-4" />
                                         </Button>
-                                        <Button variant="ghost" size="icon">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="relative"
+                                            onClick={(e) => toggleMenu(activeUser.session.sessionId, e)}
+                                        >
                                             <MoreVertical className="h-4 w-4" />
+                                            {openMenuSessionId === activeUser.session.sessionId && (
+                                                <div className="absolute right-0 top-full mt-2 w-48 bg-card border rounded-lg shadow-lg z-50 py-1 overflow-hidden">
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleViewJson(activeUser);
+                                                        }}
+                                                        className="w-full text-left px-4 py-2 text-sm hover:bg-muted flex items-center gap-2"
+                                                    >
+                                                        <FileJson className="h-4 w-4" />
+                                                        View JSON
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDownloadJson(activeUser);
+                                                        }}
+                                                        className="w-full text-left px-4 py-2 text-sm hover:bg-muted flex items-center gap-2"
+                                                    >
+                                                        <Download className="h-4 w-4" />
+                                                        Download JSON
+                                                    </button>
+                                                </div>
+                                            )}
                                         </Button>
                                     </div>
                                 </div>
