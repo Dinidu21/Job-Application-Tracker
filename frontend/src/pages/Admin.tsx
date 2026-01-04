@@ -20,7 +20,6 @@ import {
     Filter,
     ChevronRight,
     Cpu,
-    Network,
     HardDrive,
     Users
 } from 'lucide-react';
