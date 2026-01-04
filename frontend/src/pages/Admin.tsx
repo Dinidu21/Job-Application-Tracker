@@ -111,6 +111,7 @@ const Admin: React.FC = () => {
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [expandedCard, setExpandedCard] = useState<string | null>(null);
     const [openMenuSessionId, setOpenMenuSessionId] = useState<string | null>(null);
+    const [showDownloadMenu, setShowDownloadMenu] = useState(false);
     const navigate = useNavigate();
 
     const fetchData = async () => {
@@ -164,9 +165,48 @@ const Admin: React.FC = () => {
         setOpenMenuSessionId(null);
     };
 
+    const handleDownloadJSONL = () => {
+        if (!data[0]?.activeUsers) return;
+        const jsonlData = data[0].activeUsers.map(u =>
+            JSON.stringify({
+                user: u.user,
+                session: u.session,
+                activity: u.activity
+            })
+        ).join('\n');
+        downloadFile(jsonlData, `all_sessions_${new Date().toISOString()}.jsonl`, 'text/plain;charset=utf-8');
+        setShowDownloadMenu(false);
+    };
+
+    const handleDownloadJSON = (pretty: boolean) => {
+        if (!data[0]?.activeUsers) return;
+        const jsonData = data[0].activeUsers.map(u => ({
+            user: u.user,
+            session: u.session,
+            activity: u.activity
+        }));
+        const jsonString = JSON.stringify(jsonData, null, pretty ? 2 : 0);
+        downloadFile(jsonString, `all_sessions_${new Date().toISOString()}.json`, 'application/json;charset=utf-8');
+        setShowDownloadMenu(false);
+    };
+
+    const downloadFile = (content: string, fileName: string, contentType: string) => {
+        const blob = new Blob([content], { type: contentType });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    };
+
     // Close menu when clicking outside
     useEffect(() => {
-        const handleClickOutside = () => setOpenMenuSessionId(null);
+        const handleClickOutside = () => {
+            setOpenMenuSessionId(null);
+            setShowDownloadMenu(false);
+        };
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
@@ -282,32 +322,44 @@ const Admin: React.FC = () => {
                         <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                         {loading ? 'Syncing...' : 'Refresh'}
                     </Button>
-                    <Button
-                        variant="outline"
-                        onClick={() => {
-                            if (!data[0]?.activeUsers) return;
-                            const jsonlData = data[0].activeUsers.map(u =>
-                                JSON.stringify({
-                                    user: u.user,
-                                    session: u.session,
-                                    activity: u.activity
-                                })
-                            ).join('\n');
-                            const blob = new Blob([jsonlData], { type: 'text/plain;charset=utf-8' });
-                            const url = window.URL.createObjectURL(blob);
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.setAttribute('download', `all_sessions_${new Date().toISOString()}.jsonl`);
-                            document.body.appendChild(link);
-                            link.click();
-                            link.remove();
-                        }}
-                        disabled={loading || !data[0]?.activeUsers?.length}
-                        className="gap-2"
-                    >
-                        <Download className="h-4 w-4" />
-                        Download All JSONL
-                    </Button>
+                    <div className="relative">
+                        <Button
+                            variant="outline"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowDownloadMenu(!showDownloadMenu);
+                            }}
+                            disabled={loading || !data[0]?.activeUsers?.length}
+                            className="gap-2"
+                        >
+                            <Download className="h-4 w-4" />
+                            Download All Sessions
+                        </Button>
+                        {showDownloadMenu && (
+                            <div className="absolute right-0 top-full mt-2 w-56 bg-card border rounded-lg shadow-lg z-50 py-1 overflow-hidden">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDownloadJSONL();
+                                    }}
+                                    className="w-full text-left px-4 py-2 text-sm hover:bg-muted flex items-center gap-2"
+                                >
+                                    <FileJson className="h-4 w-4" />
+                                    Download as JSONL
+                                </button>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDownloadJSON(true);
+                                    }}
+                                    className="w-full text-left px-4 py-2 text-sm hover:bg-muted flex items-center gap-2"
+                                >
+                                    <FileJson className="h-4 w-4" />
+                                    Download as JSON (Pretty)
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
