@@ -282,6 +282,32 @@ const Admin: React.FC = () => {
                         <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                         {loading ? 'Syncing...' : 'Refresh'}
                     </Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            if (!data[0]?.activeUsers) return;
+                            const jsonlData = data[0].activeUsers.map(u =>
+                                JSON.stringify({
+                                    user: u.user,
+                                    session: u.session,
+                                    activity: u.activity
+                                })
+                            ).join('\n');
+                            const blob = new Blob([jsonlData], { type: 'text/plain;charset=utf-8' });
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', `all_sessions_${new Date().toISOString()}.jsonl`);
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
+                        }}
+                        disabled={loading || !data[0]?.activeUsers?.length}
+                        className="gap-2"
+                    >
+                        <Download className="h-4 w-4" />
+                        Download All JSONL
+                    </Button>
                 </div>
             </div>
 
