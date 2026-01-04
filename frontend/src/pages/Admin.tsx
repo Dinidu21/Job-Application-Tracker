@@ -39,6 +39,16 @@ interface UserInfo {
 interface GeoInfo {
     country: string;
     city: string;
+    region?: string;
+    regionName?: string;
+    zip?: string;
+    lat?: number;
+    lon?: number;
+    timezone?: string;
+    isp?: string;
+    org?: string;
+    as?: string;
+    query?: string;
 }
 
 interface SessionInfo {
@@ -427,7 +437,9 @@ const Admin: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-muted-foreground">Location</p>
-                                            <p className="font-medium">{activeUser.session.geo?.city || 'Unknown'}</p>
+                                            <p className="font-medium">
+                                                {activeUser.session.geo?.city}, {activeUser.session.geo?.country}
+                                            </p>
                                         </div>
                                     </div>
 
@@ -482,105 +494,96 @@ const Admin: React.FC = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {/* Session Details */}
-                                        <div className="space-y-3">
-                                            <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
-                                                <Network className="h-4 w-4" />
-                                                Session Details
-                                            </h4>
-                                            <div className="space-y-2">
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">IP Address</p>
-                                                    <code className="text-sm bg-background px-2 py-1 rounded">{activeUser.session.IP}</code>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Browser & OS</p>
-                                                    <div className="flex gap-2 text-sm">
-                                                        <Badge variant="outline" className="gap-1 font-normal">
-                                                            <Monitor className="h-3 w-3" />
-                                                            {activeUser.session.browser || 'Unknown'} {activeUser.session.browser_major}
+                                    {/* IP & Network Details */}
+                                    <div className="space-y-3">
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
+                                            <Globe className="h-4 w-4" />
+                                            Network & Location
+                                        </h4>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">ISP & Organization</p>
+                                                <p className="text-sm">{activeUser.session.geo?.isp || 'Unknown'}</p>
+                                                <p className="text-xs text-muted-foreground">{activeUser.session.geo?.org}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Region</p>
+                                                <p className="text-sm">
+                                                    {activeUser.session.geo?.regionName} ({activeUser.session.geo?.region}) - {activeUser.session.geo?.zip}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Coordinates & Timezone</p>
+                                                <p className="text-sm">
+                                                    {activeUser.session.geo?.lat}, {activeUser.session.geo?.lon}
+                                                </p>
+                                                <p className="text-xs text-muted-foreground">{activeUser.session.geo?.timezone}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Activity Details */}
+                                    <div className="space-y-3">
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
+                                            <Activity className="h-4 w-4" />
+                                            Activity
+                                        </h4>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Last Endpoint</p>
+                                                <code className="text-sm bg-background px-2 py-1 rounded block truncate">
+                                                    {activeUser.activity.lastEndpoint || 'N/A'}
+                                                </code>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Requests/Min</p>
+                                                <p className="text-sm">{activeUser.activity.averageRequestsPerMinute.toFixed(1)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Pages Visited</p>
+                                                <div className="flex flex-wrap gap-1 mt-1">
+                                                    {activeUser.activity.pagesVisited.slice(0, 3).map((page, i) => (
+                                                        <Badge key={i} variant="outline" className="text-xs">
+                                                            {page}
                                                         </Badge>
-                                                        <Badge variant="outline" className="gap-1 font-normal">
-                                                            <Cpu className="h-3 w-3" />
-                                                            {activeUser.session.os || 'Unknown'} {activeUser.session.os_version} {activeUser.session.os_arch ? `(${activeUser.session.os_arch})` : ''}
+                                                    ))}
+                                                    {activeUser.activity.pagesVisited.length > 3 && (
+                                                        <Badge variant="outline" className="text-xs">
+                                                            +{activeUser.activity.pagesVisited.length - 3} more
                                                         </Badge>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">User Agent (Raw)</p>
-                                                    <p className="text-xs text-muted-foreground truncate" title={activeUser.session.userAgent}>
-                                                        {activeUser.session.userAgent}
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Expires</p>
-                                                    <p className="text-sm">{new Date(activeUser.session.expiresAt).toLocaleTimeString()}</p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {/* Activity Details */}
-                                        <div className="space-y-3">
-                                            <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
-                                                <Activity className="h-4 w-4" />
-                                                Activity
-                                            </h4>
-                                            <div className="space-y-2">
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Last Endpoint</p>
-                                                    <code className="text-sm bg-background px-2 py-1 rounded block truncate">
-                                                        {activeUser.activity.lastEndpoint || 'N/A'}
-                                                    </code>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Requests/Min</p>
-                                                    <p className="text-sm">{activeUser.activity.averageRequestsPerMinute.toFixed(1)}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Pages Visited</p>
-                                                    <div className="flex flex-wrap gap-1 mt-1">
-                                                        {activeUser.activity.pagesVisited.slice(0, 3).map((page, i) => (
-                                                            <Badge key={i} variant="outline" className="text-xs">
-                                                                {page}
-                                                            </Badge>
-                                                        ))}
-                                                        {activeUser.activity.pagesVisited.length > 3 && (
-                                                            <Badge variant="outline" className="text-xs">
-                                                                +{activeUser.activity.pagesVisited.length - 3} more
-                                                            </Badge>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                    {/* Security Details */}
+                                    <div className="space-y-3">
+                                        <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
+                                            <Shield className="h-4 w-4" />
+                                            Security
+                                        </h4>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Token Expires</p>
+                                                <p className="text-sm">{new Date(activeUser.security.tokenExpiresAt).toLocaleTimeString()}</p>
                                             </div>
-                                        </div>
-
-                                        {/* Security Details */}
-                                        <div className="space-y-3">
-                                            <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground flex items-center gap-2">
-                                                <Shield className="h-4 w-4" />
-                                                Security
-                                            </h4>
-                                            <div className="space-y-2">
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Token Expires</p>
-                                                    <p className="text-sm">{new Date(activeUser.security.tokenExpiresAt).toLocaleTimeString()}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">Security Flags</p>
-                                                    <div className="flex flex-wrap gap-1 mt-1">
-                                                        {activeUser.security.flags.length > 0 ? (
-                                                            activeUser.security.flags.map((flag, i) => (
-                                                                <Badge key={i} variant="destructive" className="text-xs">
-                                                                    {flag}
-                                                                </Badge>
-                                                            ))
-                                                        ) : (
-                                                            <Badge variant="outline" className="text-xs">
-                                                                None
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">Security Flags</p>
+                                                <div className="flex flex-wrap gap-1 mt-1">
+                                                    {activeUser.security.flags.length > 0 ? (
+                                                        activeUser.security.flags.map((flag, i) => (
+                                                            <Badge key={i} variant="destructive" className="text-xs">
+                                                                {flag}
                                                             </Badge>
-                                                        )}
-                                                    </div>
+                                                        ))
+                                                    ) : (
+                                                        <Badge variant="outline" className="text-xs">
+                                                            None
+                                                        </Badge>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -588,30 +591,33 @@ const Admin: React.FC = () => {
                                 </div>
                             )}
                         </CardContent>
-                    </Card>
-                ))}
+                    </Card >
+                ))
+                }
 
-                {filteredUsers.length === 0 && (
-                    <Card className="text-center py-12">
-                        <CardContent>
-                            <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold mb-2">No sessions found</h3>
-                            <p className="text-muted-foreground mb-4">
-                                {searchQuery ? 'Try a different search term' : 'No active sessions match your filters'}
-                            </p>
-                            {(searchQuery || selectedFilter !== 'all') && (
-                                <Button variant="outline" onClick={() => {
-                                    setSearchQuery('');
-                                    setSelectedFilter('all');
-                                }}>
-                                    Clear filters
-                                </Button>
-                            )}
-                        </CardContent>
-                    </Card>
-                )}
-            </div>
-        </div>
+                {
+                    filteredUsers.length === 0 && (
+                        <Card className="text-center py-12">
+                            <CardContent>
+                                <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                                <h3 className="text-lg font-semibold mb-2">No sessions found</h3>
+                                <p className="text-muted-foreground mb-4">
+                                    {searchQuery ? 'Try a different search term' : 'No active sessions match your filters'}
+                                </p>
+                                {(searchQuery || selectedFilter !== 'all') && (
+                                    <Button variant="outline" onClick={() => {
+                                        setSearchQuery('');
+                                        setSelectedFilter('all');
+                                    }}>
+                                        Clear filters
+                                    </Button>
+                                )}
+                            </CardContent>
+                        </Card>
+                    )
+                }
+            </div >
+        </div >
     );
 };
 
