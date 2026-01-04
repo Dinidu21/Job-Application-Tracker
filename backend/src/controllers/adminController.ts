@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { UAParser } from 'ua-parser-js';
 import { AuthRequest } from '../middleware/authMiddleware';
 import Session from '../models/Session';
 import User from '../models/User';
@@ -10,6 +11,13 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
 
         const usersData = allSessions.filter(s => s.userId).map(s => {
             const user = s.userId as any;
+
+            const parser = new UAParser(s.userAgent);
+            const browser = parser.getBrowser();
+            const os = parser.getOS();
+            const device = parser.getDevice();
+            const cpu = parser.getCPU();
+
             return {
                 user: {
                     id: user._id,
@@ -26,8 +34,15 @@ export const getMonitoringData = async (req: AuthRequest, res: Response): Promis
                     loginAt: s.loginTime,
                     lastSeenAt: s.lastSeenAt,
                     expiresAt: s.expiresAt,
-                    deviceType: s.deviceType,
+                    deviceType: device.type || s.deviceType || 'desktop', // Use parsed type or fallback
                     userAgent: s.userAgent,
+                    browser: browser.name || 'Unknown',
+                    browser_major: browser.major || '',
+                    os: os.name || 'Unknown',
+                    os_version: os.version || '',
+                    os_arch: cpu.architecture || '',
+                    device_Vendor: device.vendor || '',
+                    device_Model: device.model || '',
                     IP: s.ip,
                     geo: s.geo,
                 },

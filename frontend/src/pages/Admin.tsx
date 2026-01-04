@@ -50,6 +50,13 @@ interface SessionInfo {
     userAgent: string;
     IP: string;
     geo: GeoInfo;
+    browser?: string;
+    browser_major?: string;
+    os?: string;
+    os_version?: string;
+    os_arch?: string;
+    device_Vendor?: string;
+    device_Model?: string;
 }
 
 interface ActivityInfo {
@@ -488,8 +495,23 @@ const Admin: React.FC = () => {
                                                     <code className="text-sm bg-background px-2 py-1 rounded">{activeUser.session.IP}</code>
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs text-muted-foreground">User Agent</p>
-                                                    <p className="text-sm truncate">{activeUser.session.userAgent}</p>
+                                                    <p className="text-xs text-muted-foreground">Browser & OS</p>
+                                                    <div className="flex gap-2 text-sm">
+                                                        <Badge variant="outline" className="gap-1 font-normal">
+                                                            <Monitor className="h-3 w-3" />
+                                                            {activeUser.session.browser || 'Unknown'} {activeUser.session.browser_major}
+                                                        </Badge>
+                                                        <Badge variant="outline" className="gap-1 font-normal">
+                                                            <Cpu className="h-3 w-3" />
+                                                            {activeUser.session.os || 'Unknown'} {activeUser.session.os_version} {activeUser.session.os_arch ? `(${activeUser.session.os_arch})` : ''}
+                                                        </Badge>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs text-muted-foreground">User Agent (Raw)</p>
+                                                    <p className="text-xs text-muted-foreground truncate" title={activeUser.session.userAgent}>
+                                                        {activeUser.session.userAgent}
+                                                    </p>
                                                 </div>
                                                 <div>
                                                     <p className="text-xs text-muted-foreground">Expires</p>
