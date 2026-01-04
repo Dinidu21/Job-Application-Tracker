@@ -37,8 +37,21 @@ interface UserInfo {
 }
 
 interface GeoInfo {
-    country: string;
-    city: string;
+    status?: string;
+    country?: string;
+    countryCode?: string;
+    region?: string;
+    regionName?: string;
+    city?: string;
+    zip?: string;
+    lat?: number;
+    lon?: number;
+    timezone?: string;
+    isp?: string;
+    org?: string;
+    as?: string;
+    query?: string;
+    message?: string;
 }
 
 interface SessionInfo {
@@ -494,6 +507,27 @@ const Admin: React.FC = () => {
                                                     <p className="text-xs text-muted-foreground">IP Address</p>
                                                     <code className="text-sm bg-background px-2 py-1 rounded">{activeUser.session.IP}</code>
                                                 </div>
+                                                <div>
+                                                    <p className="text-xs text-muted-foreground">Location</p>
+                                                    <div className="text-sm">
+                                                        <span className="font-medium">
+                                                            {activeUser.session.geo?.city}, {activeUser.session.geo?.country}
+                                                        </span>
+                                                        {activeUser.session.geo?.regionName && (
+                                                            <span className="text-muted-foreground block text-xs">
+                                                                {activeUser.session.geo.regionName}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                {(activeUser.session.geo?.isp || activeUser.session.geo?.org) && (
+                                                    <div>
+                                                        <p className="text-xs text-muted-foreground">Network Provider</p>
+                                                        <p className="text-sm truncate" title={activeUser.session.geo?.as}>
+                                                            {activeUser.session.geo?.isp || activeUser.session.geo?.org}
+                                                        </p>
+                                                    </div>
+                                                )}
                                                 <div>
                                                     <p className="text-xs text-muted-foreground">Browser & OS</p>
                                                     <div className="flex gap-2 text-sm">

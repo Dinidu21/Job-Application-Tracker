@@ -3,6 +3,7 @@ import { AuthRequest } from '../middleware/authMiddleware';
 import * as authService from '../services/authService';
 import { validationResult } from 'express-validator';
 import Session from '../models/Session';
+import { getIpGeoLocation } from '../utils/geoUtils';
 
 export const register = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -16,13 +17,21 @@ export const register = async (req: AuthRequest, res: Response): Promise<void> =
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const userAgent = req.get('User-Agent') || '';
     const deviceType = userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone') ? 'mobile' : 'desktop';
+
+    const normalizedIp = Array.isArray(req.headers['x-forwarded-for'])
+      ? req.headers['x-forwarded-for'][0]
+      : (req.headers['x-forwarded-for'] as string) || req.ip || '';
+
+    // Fetch Geo Data
+    const geoData = await getIpGeoLocation(normalizedIp);
+
     Session.create({
       userId: result.user.id,
       expiresAt,
-      ip: req.ip,
+      ip: normalizedIp,
       userAgent,
       deviceType,
-      geo: { country: 'Unknown', city: 'Unknown' },
+      geo: geoData,
     }).catch(err => console.error('Session creation failed', err));
     res.status(201).json(result);
   } catch (error: any) {
@@ -42,13 +51,21 @@ export const login = async (req: AuthRequest, res: Response): Promise<void> => {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const userAgent = req.get('User-Agent') || '';
     const deviceType = userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone') ? 'mobile' : 'desktop';
+
+    const normalizedIp = Array.isArray(req.headers['x-forwarded-for'])
+      ? req.headers['x-forwarded-for'][0]
+      : (req.headers['x-forwarded-for'] as string) || req.ip || '';
+
+    // Fetch Geo Data
+    const geoData = await getIpGeoLocation(normalizedIp);
+
     Session.create({
       userId: result.user.id,
       expiresAt,
-      ip: req.ip,
+      ip: normalizedIp,
       userAgent,
       deviceType,
-      geo: { country: 'Unknown', city: 'Unknown' },
+      geo: geoData,
     }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {
@@ -71,11 +88,20 @@ export const googleAuth = async (req: AuthRequest, res: Response): Promise<void>
     const { googleId, name, email } = req.body;
     const result = await authService.googleAuth({ googleId, name, email });
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+    const normalizedIp = Array.isArray(req.headers['x-forwarded-for'])
+      ? req.headers['x-forwarded-for'][0]
+      : (req.headers['x-forwarded-for'] as string) || req.ip || '';
+
+    // Fetch Geo Data
+    const geoData = await getIpGeoLocation(normalizedIp);
+
     Session.create({
       userId: result.user.id,
       expiresAt,
-      ip: req.ip,
+      ip: normalizedIp,
       userAgent: req.get('User-Agent'),
+      geo: geoData,
     }).catch(err => console.error('Session creation failed', err));
     res.status(200).json(result);
   } catch (error: any) {
@@ -137,4 +163,3 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
     res.status(400).json({ message: error.message || 'Failed to update profile' });
   }
 };
-

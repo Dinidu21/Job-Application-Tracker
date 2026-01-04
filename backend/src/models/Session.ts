@@ -9,8 +9,21 @@ export interface ISession extends Document {
   userAgent?: string;
   deviceType?: string;
   geo?: {
-    country: string;
-    city: string;
+    status?: string;
+    country?: string;
+    countryCode?: string;
+    region?: string;
+    regionName?: string;
+    city?: string;
+    zip?: string;
+    lat?: number;
+    lon?: number;
+    timezone?: string;
+    isp?: string;
+    org?: string;
+    as?: string;
+    query?: string;
+    message?: string;
   };
 }
 
@@ -43,8 +56,21 @@ const sessionSchema = new Schema<ISession>(
       type: String,
     },
     geo: {
+      status: String,
       country: String,
+      countryCode: String,
+      region: String,
+      regionName: String,
       city: String,
+      zip: String,
+      lat: Number,
+      lon: Number,
+      timezone: String,
+      isp: String,
+      org: String,
+      as: String,
+      query: String,
+      message: String
     },
   },
   {
